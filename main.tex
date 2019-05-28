@@ -11,10 +11,12 @@
 
 \usepackage{amsmath} % formulas sin numero
 \usepackage{float}
+\usepackage{hyperref} % habilita los hipervinculos
 
 \usepackage{subcaption} %Varias imágenes, misma linea
 \usepackage{graphicx} % para poner dos imágenes juntas
 \graphicspath{{pictures/}{../pictures/}}
+\usepackage{svg}
 
 
 \usepackage{anysize}  %margenes
@@ -53,48 +55,9 @@
 \begin{document}
 \sloppy 
 \pagebreak 
-%http://tex.stackexchange.com/questions/129088/create-a-frame-for-a-title-page
 \makeatletter
 
-\begin{titlepage}
-	\begin{adjustwidth}{-1.5cm}{0cm}
-		\begin{tikzpicture}[remember picture, overlay]
-		\usetikzlibrary{calc}
-		\draw[line width = 1.5pt] ($(current page.north west) + (1in,-1in)$) rectangle ($(current page.south east) + (-1in,1in)$);
-		\end{tikzpicture}
-		
-		\vspace{-3.5em}
-		\hspace{-0.5em}
-		\begin{minipage}{0.45\textwidth}
-			\begin{flushleft}
-				\includegraphics[width=1.75cm]{logo_uex.png}
-			\end{flushleft}
-		\end{minipage}
-		
-		\vspace{-6em}
-		\hspace{20em}
-		\begin{minipage}{0.45\textwidth}
-			\begin{flushright}
-				\includegraphics[width=4cm]{logo_epcc.png}
-			\end{flushright}
-		\end{minipage}\\[1.5cm]
-		
-		\begin{center}
-			
-			
-			% Upper part of the page
-			\textsc{\LARGE UNIVERSIDAD DE EXTREMADURA}\\[4cm]
-			
-			\textsc{\Large Escuela Politécnica}\\[0.5cm]
-			\textsc{\Large Grado de Ingeniería Informática en Ingeniería del Software}\\[3cm]
-			\textsc{\Large Trabajo Fin de Grado}\\[0.5cm]
-			{ \large \bfseries \@title}\\[4.0cm]
-			\vfill
-			% Bottom of the page
-			{\large}
-		\end{center}
-	\end{adjustwidth}
-\end{titlepage}
+\input{sections/00_portada.tex}
 
 \pagestyle{empty}
 
@@ -143,6 +106,11 @@
 
 \makeatother
 \thispagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% abstract %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newpage
 \thispagestyle{empty}
 
@@ -150,12 +118,13 @@
 
 \input{sections/0_abstract_en.tex}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% tablas %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \pagenumbering{roman}
 \setcounter{page}{1}
 \tableofcontents
-%\pagebreak
 \newpage
 \listoftables
 \newpage
@@ -163,98 +132,25 @@
 \newpage
 
 
-%%%%%%% ESTRUCTURA DEL TFG %%%%%%%%%%%%%%
-% A.PORTADA (según la estructura indicada a continuación) 
-% B.CONTRAPORTADA (según la estructura indicada a continuación) 
-% C.ÍNDICE GENERAL DE CONTENIDOS  
-% D.ÍNDICE DE TABLAS  
-% E.ÍNDICE DE FIGURAS 
-% F.RESUMEN (Podrá incluirse también en inglés, si así lo indica el Tutor1) 
-% G.CUERPO DEL TRABAJO (según la estr
-% uctura indicada a continuación) 
-% H.REFERENCIAS BIBLIOGRÁFICAS 
-% (Según norma ISO690)
-% I.ANEXOS, si los hubiera
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%% Cuerpo del trabajo
-% 1.INTRODUCCIÓN 
-% 2.OBJETIVOS 
-% 3.ANTECEDENTES / ESTADO DEL ARTE 
-% 4.MÉTODOLOGÍA 
-% 5.IMPLEMENTACIÓN Y DESARROLLO (Cuando proceda) 
-% 6.RESULTADOS Y DISCUSIÓN 
-% 7.CONCLUSIONES 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Tamaño: Normalizado UNE A-4, salvo planos. 
-% Tipo y tamaño de letra del texto: Times New Roman 12 pt, Arial 12 pt o similar. 
-% Interlineado del texto: 1,5 líneas. 
-% Márgenes del texto: Superior, Inferior y Derecha, 2,5 cm; Izquierda, 4 cm. 
-% Numeración de páginas en margen inferior derecha y tamaño 8 pt. 
-% Las  figuras  serán  numeradas  y  tituladas  debajo  de  las  mismas  (indicando  su  fuente  si  no  son  de  elaboración  
-% propia). 
-% Las  tablas  serán  numeradas  y  tituladas  encima  de  las  mismas  (indicando  su  fuente  si  no  son  de  elaboración  
-% propia). 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% cuerpo %%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \pagenumbering{arabic}
 \pagestyle{fancy}
 \setcounter{page}{1}
 
-\chapter{Introducción}
-Esta plantilla sirve como ejemplo de TFG. Las secciones son las que están en la normativa. Esta sección la aprovechamos para introducir brevemente \LaTeX.
-\par
+\input{sections/1_introduccion.tex}
 
-\section{Secciones}
-Las secciones se crean con \textit{section}. Las subsecciones y subsubsecciones con \textit{subsection} y \textit{subsubsection}, respectivamente. Si se desea que alguna subsección en concreto no salga en el índice se pueden usar los mismos comandos añadiéndoles un asterisco al final (\textit{subsection*} y \textit{subsubsection*}).
-\par
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-\subsection{una subsección}
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-\subsection{otra subsección}
-Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-\subsubsection{subsubsecciones}
-¡Por defecto las subsubsecciones no aparecen en el índice! Este comportamiento se puede cambiar.
+\input{sections/2_objetivos.tex}
 
-\section{Citas y referencias}
-Para citar un texto hay que incluirlo en el fichero \textit{library.bib} de esta plantilla. Una vez hecho se puede\cite{CMUSphinx} referenciar usando el comando \textit{cite}~\cite{LaTeX_tutorials}.
-Para referenciar imágenes, secciones o tablas se usa el comando~\textit{ref}. Por ejemplo~\ref{fig:logoEpcc}. Es importante haber añadido una etiqueta con el nombre correspondiente al emenento a referenciar.
-\par
-Para facilitar la lectura, cuando se insertan citas y referencias es conveniente insertar un caracter de espacio sin salto de línea \textit{\~} antes del comando de cita o referencia.
+\input{sections/3_estado_arte.tex}
 
+\input{sections/4_metodologia.tex}
 
-\section{Imágenes}
-Las imágenes se insertan así:
+\input{sections/5_implementacion.tex}
 
-% \begin{figure}[H]
-% \centering
-% \includegraphics[width=0.6\textwidth]{logo_epcc.png}}
-% \caption[Logo Epcc]{Logo Epcc.\\Fuente:http://www.unex.es/conoce-la-uex/centros/epcc/}
-% \label{fig:logoEpcc}
-% \end{figure}
-
-
-\chapter{Objetivos}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-\chapter{Estado del Arte}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-\chapter{Metodología}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-\chapter{Implementación y desarrollo}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-\chapter{Resultados}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-\chapter{Conclusiones y trabajos futuros}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\input{sections/7_conclusiones.tex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -265,20 +161,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor inci
 \appendixpage
 \addappheadtotoc
 
-\chapter{Ejemplo de anexo}
-Si no se desea incluir anexos, sólo hay que borrar este capítulo.
-\par
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor
-incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\
+\input{sections/annexes/Anexo1.tex}
 
 
 \pagebreak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%% AL FINAL %%%%%%%%%%%%%%
+%%%%%%%% bibliografia %%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \thispagestyle{empty}
 \pagestyle{empty}
-%%%% https://en.wikibooks.org/wiki/LaTeX/Bibliography_Management
 \addcontentsline{toc}{chapter}{Bibliografía}
 \bibliographystyle{unsrt}
 \bibliography{library.bib}
