@@ -1,9 +1,11 @@
 \documentclass[12pt,a4paper,twoside]{book}
 
 \usepackage[spanish, es-tabla]{babel}
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
 
 \usepackage[table]{xcolor} % para poner color en las tablas
+
+\usepackage{subfiles}
 
 \usepackage{tikz} %Gráficos
 \usetikzlibrary{calc}
@@ -15,7 +17,7 @@
 
 \usepackage{subcaption} %Varias imágenes, misma linea
 \usepackage{graphicx} % para poner dos imágenes juntas
-\graphicspath{{pictures/}{../pictures/}}
+\graphicspath{{pictures/}{../pictures/}{../../pictures/}}
 \usepackage{svg}
 
 
@@ -45,6 +47,10 @@
 
 \usepackage{color} %Colores
 
+\usepackage[compact]{titlesec}         % you need this package
+\titlespacing{\section}{0pt}{*2}{*2}
+\titlespacing{\subsection}{0pt}{*2}{*2}
+
 \makeatletter
 \def\BState{\State\hskip-\ALG@thistlm}
 \makeatother
@@ -57,7 +63,7 @@
 \pagebreak 
 \makeatletter
 
-\input{sections/00_portada.tex}
+\subfile{sections/00_portada.tex}
 
 \pagestyle{empty}
 
@@ -114,9 +120,9 @@
 \newpage
 \thispagestyle{empty}
 
-\input{sections/0_abstract_es.tex}
+\subfile{sections/0_abstract_es.tex}
 
-\input{sections/0_abstract_en.tex}
+\subfile{sections/0_abstract_en.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%% tablas %%%%%%%%%%%%%%%
@@ -140,17 +146,19 @@
 \pagestyle{fancy}
 \setcounter{page}{1}
 
-\input{sections/1_introduccion.tex}
+\subfile{sections/1_introduccion.tex}
 
-\input{sections/2_objetivos.tex}
+\subfile{sections/2_objetivos.tex}
 
-\input{sections/3_estado_arte.tex}
+\subfile{sections/3_estado_arte.tex}
 
-\input{sections/4_metodologia.tex}
+\subfile{sections/4_metodologia.tex}
 
-\input{sections/5_implementacion.tex}
+\subfile{sections/5_propuesta_solucion.tex}
 
-\input{sections/7_conclusiones.tex}
+\subfile{sections/6_validacion.tex}
+
+\subfile{sections/7_conclusiones.tex}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -161,7 +169,7 @@
 \appendixpage
 \addappheadtotoc
 
-\input{sections/annexes/Anexo1.tex}
+\subfile{sections/annexes/Anexo1.tex}
 
 
 \pagebreak
