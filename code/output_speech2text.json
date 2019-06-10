@@ -1,0 +1,17 @@
+{
+  "model_score": 123456,
+  "confidence": 123456789,
+  "text":[
+      {
+          "text":"word1",
+          "start_time": 0.0,
+          "end_time":1.0
+      },
+      {
+          "text":"word2",
+          "start_time": 2.0,
+          "end_time":3.0
+      }
+      ]
+  
+}

@@ -1,0 +1,13 @@
+[
+  {
+    "path": "/srv/shared_folder/audio/0.wav",
+    "start_time": 0.0,
+    "end_time": 1.845
+  },
+  {
+    "path": "/srv/shared_folder/audio/1.wav",
+    "start_time": 2.225,
+    "end_time": 15.739
+  },
+  ...
+]

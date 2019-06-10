@@ -3,7 +3,7 @@
 \usepackage[spanish, es-tabla]{babel}
 \usepackage[utf8]{inputenc}
 
-\usepackage[table]{xcolor} % para poner color en las tablas
+\usepackage[table]{xcolor} % para poner color en las tablasa
 
 \usepackage{subfiles}
 
@@ -17,9 +17,10 @@
 
 \usepackage{subcaption} %Varias imágenes, misma linea
 \usepackage{graphicx} % para poner dos imágenes juntas
-\graphicspath{{pictures/}{../pictures/}{../../pictures/}}
+\graphicspath{{pictures/}{../pictures/}}
 \usepackage{svg}
-
+\svgpath{{pictures/}{../pictures}}
+\captionsetup{justification=centering}
 
 \usepackage{anysize}  %margenes
 % MÁRGENES 
@@ -42,6 +43,9 @@
 \usepackage{ragged2e} %Añade más funcionalidades de colocación de texto
 
 \usepackage{listings} %Listas
+% \usepackage{bera}
+\usepackage{enumitem}
+
 
 \usepackage{appendix} %apéndice
 
@@ -112,6 +116,8 @@
 
 \makeatother
 \thispagestyle{empty}
+
+\subfile{sections/02_agradecimientos.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% abstract %%%%%%%%%%%%%%

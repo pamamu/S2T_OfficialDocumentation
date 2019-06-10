@@ -1,0 +1,4 @@
+{
+  "audio_path": "/srv/shared_folder/info.json",
+  "transcription_path": "/srv/shared_folder/trans.json"
+}
