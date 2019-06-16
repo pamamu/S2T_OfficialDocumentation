@@ -3,17 +3,24 @@
 \usepackage[spanish, es-tabla]{babel}
 \usepackage[utf8]{inputenc}
 
-\usepackage[table]{xcolor} % para poner color en las tablasa
+%\usepackage[table]{xcolor} % para poner color en las tablasa
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{multirow}
 
 \usepackage{subfiles}
 
 \usepackage{tikz} %Gráficos
 \usetikzlibrary{calc}
 \usetikzlibrary{arrows,shapes,positioning,shadows,trees}
+\usepackage{pgfplots}
+\usepgfplotslibrary{units}
+\usepackage{pgfplotstable}
 
 \usepackage{amsmath} % formulas sin numero
 \usepackage{float}
 \usepackage{hyperref} % habilita los hipervinculos
+\usepackage{glossaries}
+\usepackage{array}
 
 \usepackage{subcaption} %Varias imágenes, misma linea
 \usepackage{graphicx} % para poner dos imágenes juntas
@@ -23,12 +30,16 @@
 \captionsetup{justification=centering}
 
 \usepackage{anysize}  %margenes
+\usepackage{footnote}
+\usepackage{tablefootnote}
 % MÁRGENES 
 \marginsize{4cm}{2.5cm}{2.5cm}{2.5cm} 
 %{izquierda}{derecha}{arriba}{abajo}
 
 \usepackage{mathptmx}% http://ctan.org/pkg/mathptmx Times new roman
 \usepackage{amsfonts}% Para expresiones matemáticas
+\usepackage{eurosym}
+\usepackage{siunitx}
 
 \renewcommand{\baselinestretch}{1.5} % Interlineado
 \usepackage{enumerate}% para los enumerate
@@ -60,7 +71,7 @@
 \makeatother
 
 \input{config.tex} %configuracion
-
+\input{glossary.tex}
 
 \begin{document}
 \sloppy 
@@ -166,6 +177,8 @@
 
 \subfile{sections/7_conclusiones.tex}
 
+\clearpage
+\printglossaries
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%% ANEXOS %%%%%%%%%%%%%%%

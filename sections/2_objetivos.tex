@@ -3,14 +3,18 @@
 
 \chapter{Objetivos}\label{ch:objetivos}
 \section{Objetivo principal}\label{sec:obj_principal}
-Descripción del objetivo principal
-Indexación de palabras en un audio
+El objetivo de este trabajo es el diseño e implementación de un sistema de tratamiento de audio que sea capaz de transcribir a texto ficheros de audio indexando cada una de las palabras que son reconocidas.
 
 \section{Objetivos secundarios}\label{sec:obj_secundarios}
-Descripción de Objetivos secundarios
-Aprendizaje del audio
-Tratamiento del audio
-Obtención de audio
-Interfaz de comunicación
+Debido a que el sistema debe ser lo más adaptable posible a todas las casuísticas (número indefinido de hablantes, diferencia de medio de grabación de audio, diferentes jergas, ...) es necesario proporcionar al sistema mecanismos de mejora de sus modelos para aumentar la fiabilidad de las transcripciones.
+
+Es por ello que el sistema debe ser capaz de adaptarse continuamente a través de:
+\begin{enumerate}
+    \item Tratamiento del audio de entrada para que se normalicen las características del audio con el que mejorar el sistema
+    \item Aprendizaje de palabras nuevas que se adapten al caso de uso en el que se vaya a aplicar este sistema.
+    \item Mejora del modelo de lenguaje que se utiliza para determinar la salida del sistema de transcripción de voz a texto.
+    \item Mejora del modelo acústico que identifica en una señal de audio las palabras pronunciadas por el hablante.
+    \item Interfaz que permita al usuario utilizar todos los servicios del sistema sin necesidad de procesos tediosos de instalación y configuración.
+\end{enumerate}
 
 \end{document}

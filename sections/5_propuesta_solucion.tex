@@ -9,7 +9,7 @@ En este apartado el autor hace una descripción de la solución propuesta para a
 %%      Análisis y Diseño       %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Análisis y diseño}\label{sec:analisis_diseno}
-En primer lugar se describe brevemente los requisitos del sistema junto a un análisis de los casos de uso. Posteriormente se explica el diseño arquitectónico del sistema completo y cómo se comunican los distintos componentes que lo forman.
+En primer lugar se describe brevemente los requisitos del sistema junto a un análisis de los casos de uso. Posteriormente se explica el diseño arquitectónico del sistema completo y como se comunican los distintos componentes que lo forman.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%   Análisis de Requisitos     %%
@@ -24,13 +24,13 @@ A continuación se exponen los requisitos funcionales, no funcionales, de inform
 El sistema deberá:
 
 \begin{enumerate}
-    \item Obtener audios con su correspondiente transcripción temporal dado la ruta del recurso.
+    \item Obtener audios con su correspondiente transcripción temporal dada la ruta del recurso.
     \item Convertir audio a formato especificado
     \item Reducir el ruido que pueda existir en ficheros de audio.
     \item Normalizar y filtrar audios a las frecuencias de la voz humana.
     \item Dividir fichero en fragmentos en base a los silencios que aparecen en el audio.
     \item Convertir conjunto de palabras a su correspondiente transcripción fonética.
-    \item Mejorar calidad en la transcripción de grafema a fonema.
+    \item Mejorar la calidad en la transcripción de grafema a fonema.
     \item Mejorar un modelo de lenguaje dado un conjunto de oraciones.
     \item Mejorar un modelo acústico de lenguaje dado un conjunto de audios con su transcripción temporal.
     \item Transcribir audio en conjunto de palabras con información temporal.
@@ -91,7 +91,7 @@ A continuación se presenta un diagrama de los casos de usos necesarios en el si
     \caption{Diagrama de casos de uso}
 \end{figure}
 
-Como se observa en la figura anterior, en el sistema se diferencian cinco casos de uso:
+Como se observa en la figura anterior, en el sistema se diferencian cuatro casos de uso:
 \begin{enumerate}
     \item \textbf{Descargar audio con transcripciones}: Dado las URIs de los recursos, se descargará el fichero de audio y la transcripción temporal asociada a éste.
     \item \textbf{Mejorar audio para sistemas de reconocimiento de voz}: A partir de un fichero de audio sin tratamiento acústico alguno, 
@@ -108,6 +108,14 @@ Como se observa en la figura anterior, en el sistema se diferencian cinco casos 
 \subsection{Arquitectura del sistema}\label{subsec:arquitectura_sistema}
 Inicialmente este sistema fue concebido con una arquitectura monolítica, es decir, solamente un sistema único donde no hubiera separación de subsistemas. Aunque al principio este planteamiento no planteó problema alguno, con el crecimiento de la cantidad de funcionalidades y requisitos de los subsistemas el sistema se basará en infraestructura formada por microservicios.
 
+En la \autoref{fig:components_resumen} se representa la arquitectura de componentes que tendrá el sistema completo.
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=\textwidth]{diagrama_general}
+    \label{fig:components_resumen}
+    \caption{Diagrama de componentes del sistema completo}
+\end{figure}
 
 Los subsistemas que forman cada uno de los microservicios con su correspondiente diagrama de componentes son:
 \paragraph{MainController}\label{par:maincontroller}
@@ -116,7 +124,7 @@ Subsistema encargado de obtener la información necesaria por parte del usuario 
 Las funcionalidades de este sistema serán:
 \begin{enumerate}
     \item Ofrecer al usuario una interfaz única donde pueda introducir los datos de entrada y la acción que desea realizar.
-    \item Mostrar el estado de todos los subsistemas así como dónde se encuentran ubicados.
+    \item Mostrar el estado de todos los subsistemas así como donde se encuentran ubicados.
     \item Ejecutar las llamadas a los distintos subsistemas necesarios dependiendo de la acción introducida por el usuario.
     \item Procesar la respuesta de estos subsistemas y devolverla al usuario a través de la interfaz.
 \end{enumerate}
@@ -148,7 +156,7 @@ Las funcionalidades de este sistema serán:
 
 Los \textbf{datos de entrada} del componente serán:
 \begin{itemize}
-    \item Lista de programas a descargar: Nombre de salida y URI del programa.
+    \item Lista de programas a descargar: Nombre de salida y \gls{URI} del programa.
     \item Directorio donde se guardarán los ficheros de audio y los ficheros con las transcripciones.
 \end{itemize}
 
@@ -169,7 +177,7 @@ Las funcionalidades de este sistema serán:
         \item Normalización del audio.
         \item Reducción de ruido de fondo.
     \end{enumerate}
-    \item Trocear audio en pequeños fragmentos o frases en base a los silencios que ocurran en el audio.
+    \item Trocear el audio en pequeños fragmentos o frases en base a los silencios que ocurran en éste.
     \item Procesar la salida de información de los fragmentos de audio incluyendo las marcas temporales de cada uno de los fragmentos con respecto al audio original.
 \end{enumerate}
 
@@ -183,7 +191,7 @@ Las funcionalidades de este sistema serán:
 Los \textbf{datos de entrada} del componente serán:
 \begin{itemize}
     \item Fichero de audio a procesar
-    \item Frecuencia de muestreo fichero de audio de salida.    
+    \item Frecuencia de muestreo del fichero de audio de salida.    
     \item Número de canales del fichero de audio de salida.
     \item Profundidad de bits del fichero de audio de salida.
     \item Formato del fichero de audio de salida.
@@ -381,8 +389,6 @@ En último lugar, el objeto remoto devolverá al componente \hyperref[par:mainco
 \end{figure}
 
 \paragraph{Diagrama de secuencia para \textit{Mejorar modelos para sistemas de reconocimiento de voz}}
-
-
 Para el mencionado caso de uso, el componente \hyperref[par:maincontroller]{MainController} ejecutará el método remoto \verb+run()+ del componente  \hyperref[par:training]{Training} pasando por parámetros los datos de entrada necesarios por este sistema y la carpeta donde se guardarán los datos de salida.
 
 Una vez se haya invocado al método remoto, el componente \hyperref[par:training]{Training} ejecutará 3 llamadas a procedimientos remotos:
@@ -400,7 +406,6 @@ Finalmente el componente \hyperref[par:training]{Training} devolverá como salid
     \caption{Diagrama de secuencia del caso de uso \textit{Mejorar modelos para sistemas de reconocimiento de voz}}
     \label{fig:flow_training}
 \end{figure}
-
 
 \paragraph{Diagrama de secuencia para \textit{Mejorar audio para sistemas de reconocimiento de voz}}
 
@@ -456,24 +461,18 @@ En este momento podemos diferencias dos tipos de sistemas:
 \subsection{Componente MainController}\label{subsec:impl_maincontroller}
 Cuando el componente \hyperref[par:maincontroller]{MainController} se inicie, creará en la carpeta compartida un fichero llamado \textit{server.info} que contendrá la URI del componente maestro. Este fichero será consultado por todos los componentes esclavos para registrarse. Por todo esto, es necesario que \textbf{la carpeta compartida sea accesible por todos los componentes del sistema}.
 
-Una vez iniciado el componente, se ejecutan dos procedimientos.
-\begin{itemize}
-    \item Componente en estado de espera: Una vez iniciado el sistema, se quedará en un estado de espera para posibles llamadas de registro por parte de los demás componentes del sistema. Cuando un componente se registre, el componente principal guardará su dirección para posibles llamadas futuras.
-    \item Interfaz web: Se ejecutará una aplicación web basada en Flask para que el usuario pueda interactuar con el sistema. Esta interfaz se explica en el apartado \hyperref[subsubsec:aplicacionweb]{Aplicación Web}.
-\end{itemize}
+Una vez iniciado el componente, se ejecutan dos procedimientos:
+\begin{enumerate}
+    \item \textbf{Componente en estado de espera}: Una vez iniciado el sistema, se quedará en un estado de espera para posibles llamadas de registro por parte de los demás componentes del sistema. Cuando un componente se registre, el componente principal guardará su dirección para posibles llamadas futuras.
+    \item \textbf{Interfaz web}: Se ejecutará una aplicación web basada en Flask para que el usuario pueda interactuar con el sistema. Esta interfaz se explica en el apartado \hyperref[subsubsec:aplicacionweb]{Aplicación Web}.
+\end{enumerate}
 
 \subsubsection{Aplicación Web}\label{subsubsec:aplicacionweb}
 Dentro del componente \hyperref[par:maincontroller]{MainController} se ejecutará una aplicación web que ofrece al usuario una interfaz donde poder interactuar con el sistema.
 
 Esta aplicación se desarrollará en Python con la libreria web Flask.
 
-A través de este interfaz se podrán realizar las siguientes acciones:
-\begin{itemize}
-    \item Descargar audio y transcripciones.
-    \item Procesar audios.
-    \item Entrenar modelos.
-    \item Speech2Text.
-\end{itemize}
+A través de este interfaz se podrán realizar las siguientes acciones: Descargar audio y transcripciones, procesar audios, entrenar modelos y proceso de transcripción de voz a texto.
 
 Estas acciones se corresponden a los casos de uso analizados. Ver en \autoref{subsec:casos_uso}
 
@@ -647,6 +646,60 @@ Un \textbf{ejemplo de la salida} puede visualizarse en el \autoref{code:output_s
 \lstinputlisting[language=json, caption = {Ejemplo de salida del componente \textit{Speech2Text}}, label={code:output_speech2text}]{output_speech2text.json}
 
 \subsection{Infraestructura de despliegue}\label{subsec:impl_infraestructura}
+Desplegar todos estos sistemas no será tarea trivial ya que son ocho sistemas comunicándose entre ellos al mismo tiempo.
 
+Después del análisis entre una infraestructura monolítica a otra basada en microservicios, se implementará usando microservicios.
+
+Cada uno de estos microservicios agrupará a un solo componente, por lo tanto tendríamos ocho microservicios: MainController, GetAudioTrans, AudioProcess, G2P, SRILM, SPHINXBASE, Training, Speech2Text.
+
+\subsubsection{Tecnologías utilizadas}\label{subsubsec:tecnologia}
+Las tecnologías que se utilizarán para modelar y desplegar un entorno de desarrollo son:
+\begin{itemize}
+    \item \textbf{Docker}: Esta tecnología va a permitir desplegar cada uno de los microservicios en componentes software independientes y abstraerse de la virtualización de cada uno de estos microservicios.
+    \item \textbf{Vagrant}: Herramienta que creará un entorno de desarrollo idéntico, lo que va a permitir aislar el sistema del hardware donde es desplegado. Como motor de virtualización se utilizará VirtualBox.
+    \item \textbf{Ansible}: Herramienta con la que se automatizarán las tareas de despliegue e instalación de dependencias. Utilizar Ansible permitirá replicar toda la infraestructura en cualquier otra máquina.
+\end{itemize}
+
+\subsubsection{Arquitectura de contenedores}\label{subsubsec:arq-contenedores}
+Se desplegará un contenedor por microservicio, por lo que tendremos una jerarquía de contenedores similar a la expresada en la \autoref{fig:componentes_conexion}.
+
+La construcciones de imágenes y contenedores se hará a través de un fichero \textit{docker-compose.yml}. Ver \autoref{ch:anexo_docker}.
+
+En este fichero también se especifica la creación de enlaces de volúmenes para actualizar el código en los contenedores sin necesidad de volver a crear la la estructura completa. Además todos los contenedores compartirán la carpeta \textit{shared\_folder}.
+
+\subsubsection{Despliegue de infraestructura}\label{subsubsec:despliegue}
+Para desplegar la infraestructura solamente habrá que ejecutar el comando \textit{vagrant up} sobre la raiz del proyecto. Es necesario tener instaladas las herramientas mencionadas en la \autoref{subsubsec:tecnologia} para ejecutar este comando.
+
+Una vez ejecutado el comando se ejecutarán los siguientes procedimiento:
+\begin{enumerate}
+    \item \textbf{Creación de una máquina virtual} con las siguientes características:
+    \begin{table}[]
+    \centering
+        \begin{tabular}{ |c|c| } 
+         \hline
+         \textbf{Número de CPUs} & 3 CPUs \\ 
+         \hline
+         \textbf{IP} & 192.168.4.95 \\ 
+         \hline
+         \textbf{Sistema Operativo} & CentOS 7\\ 
+         \hline
+         \textbf{Memoria RAM} & 3072 Mb\\ 
+         \hline
+         \textbf{Carpeta compartida} & Raiz del proyecto $\,\to\,$ \textit{/srv/S2T/}\\ 
+         \hline
+         \textbf{Carpeta compartida} & \textit{shared\_folder} $\,\to\,$ \textit{/srv/shared\_folder/}\\ 
+         \hline
+        \end{tabular}
+    \caption{Especificaciones del hardware de la máquina virtual}
+    \label{tab:my_label}
+    \end{table}
+    
+    \item \textbf{Aprovisionamiento de la máquina virtual} con Ansible: A través de Ansible se instalarán todas las herramientas necesarias además de arrancar la infraestructura de contenedores. Para este proyecto se ha contruido un rol personalizado \textit{s2t.common} que ejecutará los siguientes procedimientos:
+    \begin{enumerate}
+        \item \textbf{Instalación de Portainer}: Herramienta para la gestión de contenedores a través de una interfaz web. Se levantará en el puerto 9000 de la Maquina Virtual.
+        \item \textbf{Gestión de permisos para Docker}.
+        \item Ejecución de \textbf{Docker Compose} para la construcción de todos los servicios y recursos
+    \end{enumerate}
+\end{enumerate}
 
 \end{document}

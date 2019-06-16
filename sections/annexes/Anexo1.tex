@@ -1,5 +1,11 @@
-\chapter{Ejemplo de anexo}
-Si no se desea incluir anexos, sólo hay que borrar este capítulo.
-\par
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor
-incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\\
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
+\chapter{Fichero de despliegue de contenedores}\label{ch:anexo_docker}
+A continuación se muestra el fichero \textit{docker-compose.yml} que construye la arquitectura de contenedores.
+
+\lstinputlisting[   caption = {Fichero de creación de contenedores                     \textit{docker-compose.yml}}, label={code:docker-compose}]
+                {docker-compose.yml}
+                
+Este fichero a su vez ejecutará los ficheros \textit{Dockerfile} de cada componente construyendo así las imágenes con las dependencias correspondientes en cada una de ellas.
+
+\end{document}

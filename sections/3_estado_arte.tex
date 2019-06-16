@@ -2,6 +2,277 @@
 \begin{document}
 
 \chapter{Estado del Arte}\label{ch:estado_arte}
-\section{}
+En este capítulo se describen los conceptos teóricos de la transcripción de audio, sistemas de transcripción de voz a texto existentes en el mercado y las alternativas tecnológicas para el desarrollo propuesto.
+\section{Conceptos teóricos}
+
+
+El reconocimiento del habla es una rama de la lingüística computacional que trabaja en desarrollar herramientas con las que una computadora traduce lenguaje hablado en texto. Esta tecnología puede recibir varias denominaciones: Reconocimiento Automático de la Voz (siglas ASR en inglés), Reconocimiento de Voz por Ordenador o Reconocimiento de Voz a Texto (Speech to Text en inglés). A lo largo de este documento también podrá encontrarse con la denominación de \textit{Transcripción de voz a texto}.
+
+Dentro de los sistemas de reconocimiento de voz se pueden diferenciar dos grupos dependiendo del sistema de entrenamiento usado: por un lado existen los sistemas que analizan la voz de una persona leyendo un determinado texto para mejorar la precisión de la transcripción para ese determinado hablante (\textbf{sistemas dependientes del hablante}); y por otro lado existen sistemas que no necesitan entrenamiento por parte de una persona (\textbf{sistemas independientes del hablante}).
+
+\subsubsection{Diferencia entre audio y sonido}
+
+Durante esta documentación se mencionarán muchos términos relacionados con el audio y el sonido, por lo que es vital conocer la diferencia entre estas dos palabras:
+
+En primer lugar, el sonido es una onda mecánica en forma de vibración que se desplaza a través de un medio de transmisión como un gas, un líquido o un sólido. Desde el punto de vista fisiológico humano, el sonido es la recepción de estas ondas mecánicas a través del oído y su transmisión al cerebro. Un ser humano de manera general puede oír ondas sonoras cuando la frecuencia de éstas se encuentra entre los 20 Hz y los 20 kHz. Si una onda sonora supera el umbral de 20 kHz se le denomina \textit{ultrasonido}, mientras que a las ondas sonoras inferiores a los 20 Hz se les conoce como \textit{infrasonido}. Cada especie animal tiene un rango audible de ondas sonoras.
+
+Por otra parte, el audio es el sonido procesado por un sistema en las fases de grabación, transmisión y reproducción. A diferencia del sonido, que se capta por el sentido del oído, el audio se representa mediante una \textit{señal de audio} utilizando normalmente niveles de voltaje eléctrico (señales analógicas) o series binarias (señales digitales).
+
+En este trabajo se analizará y procesará la voz humana que se encuentra en el audio. La voz humana consiste en el sonido que produce un ser humano utilizando su tracto vocal, mayoritariamente las cuerdas vocales. La relación entre las características del sonido y la voz son las siguientes:
+\begin{itemize}
+    \item \textbf{Intensidad}: Es el volumen con el que una persona habla. Esta intensidad o volumen se suele expresar en decibelios (dB).
+    \item \textbf{Tono}: Es la característica que indica si una voz es aguda, media o grave. Está directamente relacionada con la frecuencia de las ondas generadas. Una baja frecuencia indica una voz grave, mientras que una voz aguda tendrá una frecuencia alta.
+    \item \textbf{Duración}: Tiempo desde que un sonido se produce hasta que deja de hacerlo. En la voz se relaciona con la velocidad, ya que una persona que genere sonidos con menor duración al pronunciar una palabra, hablará más rápido que una persona cuya duración de sonido por letra o palabra sea mayor.
+    \item \textbf{Timbre}: Es la propiedad que nos permite diferenciar un sonido con la misma intensidad, duración y tono pero producido por dos elementos distintos. En la voz, el timbre va a diferenciar entre dos personas emitiendo un sonido en la misma intensidad, el mismo tono y la misma duración. Esta cualidad se representa en ondas secundarias a la onda principal de la voz, llamadas armónicos.
+\end{itemize}
+
+\subsubsection{Fases del reconocimiento de voz}
+
+El procedimiento más común utilizado en los sistemas de reconocimiento del habla es el siguiente: se toma una señal, se divide en enunciados (conjunto de palabras y otros sonidos no lingüísticos) utilizando los silencios y se trata de reconocer el habla en cada uno de estos enunciados. Para ello se toman todas las combinaciones de palabras posibles y se elige la que mejor se adapte al audio.
+
+Para tratar de obtener la máxima información del audio, este se divide en fragmentos muy pequeños (del orden de milisegundos) para extraer por cada uno de ellos un vector de características que representan el habla. Las tecnologías que se usarán en el presente proyecto utilizarán un vector de 39 características.
+
+En el proceso de reconocimiento se utilizan \textbf{modelos}, que van a representar el vector de características más probable para cada fonema. El modelo más usado en sistemas de reconocimiento de voz es Hidden Markov Model \cite{}. Dependiendo de la aplicabilidad del modelo, se pueden diferenciar:
+\begin{itemize}
+    \item \textbf{Modelo acústico}: Modelo formado por las propiedades acústicas de cada fonema.
+    \item \textbf{Modelo fonético}: Diccionario que contiene un relación de palabras a fonemas. En el lenguaje utilizado en este proyecto (castellano) no existirán problemas dado que existe un única pronunciación para cada grafema. Sin embargo, en idiomas más complejos fonéticamente como el inglés, estos diccionarios no suelen ser muy efectivos.
+    \item \textbf{Modelo de lenguaje}: Modelo que define que palabra podría ser la siguiente a un conjunto de palabras reconocidas. Esto ayudará al sistema de reconocimiento a no efectuar una comparación fonética con todas las palabras del lenguaje, sino con las que más probabilidades tengan de aparecer.
+\end{itemize}
+
+\section{Sistema de transcripción de voz a texto existentes}\label{sec:sistemas_voz}
+En el mercado actual existen multitud de herramientas de reconocimiento de voz. A continuación se analizarán cuatro de ellas de forma individual para posteriormente realizar una comparativa: 
+
+\paragraph{CMUSphinx}\label{par:cmusphinx}
+Sistema de reconocimiento de voz de código abierto para aplicaciones tanto en dispositivo móvil como en servidores. Los lenguajes soportados son: C, C++, C\#, Python, Ruby, Java, Javascript.\cite{}
+
+Este sistema posee 4 componentes principales: \underline{Pocketsphinx} (Sistema de reconocimiento de voz ligero escrito en C), \underline{Sphinx4} (Sistema de reconocimiento de voz avanzado escrito en Java), \underline{Sphinxtrain} (Sistema de entrenamiento de modelos acústicos) y \underline{Sphinxbase} (librería de soporte requerida por los demás sistemas). Estos sistemas deben instalarse en el dispositivo donde vayan a utilizarse.
+
+\paragraph{API Speech (Google)}
+Google Cloud Speech API permite convertir audio a texto mediante la aplicación de modelos de red neuronal en una API fácil de usar. La API reconoce más de 110 idiomas y variantes.\cite{}
+
+\paragraph{Bing Speech API}
+La API de voz a texto convierte el habla humana en texto que puede utilizarse como entrada o como comandos para controlar una aplicación. Para funciones avanzadas, los desarrolladores pueden descargar las bibliotecas de cliente de Microsoft Speech y enlazarlas a sus aplicaciones. Las librerías de clientes están disponibles en varias plataformas (Windows, Android, iOS) usando diferentes lenguajes (C\#, Java, JavaScript, ObjectiveC).\cite{}
+
+\paragraph{Watson (IBM)}
+Sistema de inteligencia artificial que transcribe automáticamente audio de 7 idiomas en tiempo real. Identificar y transcribir rápidamente lo que se está discutiendo, incluso a partir de audio de baja calidad, a través de una variedad de formatos de audio e interfaces de programación (HTTP REST, Websocket, Asynchronous HTTP).\cite{}
+
+
+
+En la \autoref{tab:comp_herramientas} se puede observar una comparativa de las herramientas según parámetros de control definidos en relación a los requisitos de este proyecto explicados en la \autoref{subsec:analisis_requisitos}.
+
+\begin{table}[h]
+    \centering
+    \resizebox{\textwidth}{!}{%
+        \begin{tabular}{c|c|c|c|c|}
+            \textbf{} & \multicolumn{1}{r|}{\textbf{CMUSphinx}} & \multicolumn{1}{r|}{\textbf{API Speech (Google)}} & \multicolumn{1}{r|}{\textbf{Bing Speech API}} & \multicolumn{1}{r|}{\textbf{Watson (IBM)}} \\ \hline
+            \textbf{API} & Si\tablefootnote{No disponible aunque implementable}  & Si & Si & Si \\ \hline
+            \textbf{Disponibilidad} & Online/Offline & Online & Online & Online \\ \hline
+            \textbf{Precio} & Gratis & 0,020 \euro/min \tablefootnote{Superados los 60 minutos gratis al mes} & 0,014 \euro/min \tablefootnote{Superados los 1250 minutos gratis al mes} & 0,011 \euro/min \tablefootnote{Superados los 100 minutos gratis al mes} \\ \hline
+            \textbf{Aumento de vocabulario} & Si & No & No & No \\ \hline
+            \textbf{Multidispositivo} & Si & Si & Si & Si \\ \hline
+            \textbf{Código abierto} & Si & No & No & No \\ \hline
+            \textbf{Nuevo idioma} & Si & No & No & No \\ \hline
+        \end{tabular}%
+    }
+    \caption{Comparativa de herramientas de reconocimiento de voz}
+    \label{tab:comp_herramientas}
+\end{table}
+
+Debido a que las únicas herramientas que se pueden probar desde un script de forma gratuita es \textit{CMUSphinx} y \textit{API Speech (Google)}, se comparan estas dos herramientas en cuanto a tiempo de procesamiento y porcentaje de palabras correctamente transcritas.
+
+Dadas las limitaciones que ofrece la herramienta Api Speech (Google) en su capa gratuita, se han probado cinco ficheros de audio en castellano con duraciones de cinco, diez, quince veinte y veinticinco segundos con las siguientes características: dos canales, frecuencia de muestreo de 44100 Hz de y 16 bits de profundidad. Las cantidad de palabras pronunciadas por cada fichero son: 
+
+\begin{table}[H]
+    \centering
+    \resizebox{0.5\textwidth}{!}{%
+    \begin{tabular}{|c|c|}
+    \hline
+    \textbf{Duración del audio} & \textbf{Palabras pronunciadas} \\ \hline \hline 
+    5 s & 12 \\ \hline
+    10 s & 24 \\ \hline
+    15 s & 40 \\ \hline
+    20 s & 51 \\ \hline
+    25 s & 67 \\ \hline
+    \end{tabular}%
+    }
+    \caption{Información de audios de prueba}
+    \label{tab:audios-palabras}
+\end{table}
+
+
+En la \autoref{graf:comp_herramientas} se puede observar una comparativa del tiempo necesario por cada sistema para procesar audios de distintas duraciones, mientras que en la \autoref{graf:comp_similitud} se visualizan los resultados de hacer un análisis de similitud entre el resultado de las transcripciones y la transcripción original. Este análisis de similitud se ha relizado con herramientas de procesamiento de lenguaje natural (NLTK en inglés).
+
+Los datos que se muestran en las gráficas han sido obtenidos a través de la media aritmética de los resultados tras la realización de quince ejecuciones por cada tecnología.
+
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}
+      \begin{axis}[
+          width=0.6\linewidth, % Scale the plot to \linewidth
+          grid=major, 
+          grid style={dashed,gray!30},
+          xlabel=Duración del audio, % Set the labels
+          ylabel=Tiempo de procesamiento,
+          x unit=s,
+          y unit=s,
+          legend style={at={(0.5,-0.2)},anchor=north},
+          x tick label style={rotate=90,anchor=east},
+          legend pos=north west
+        ]
+        \addplot[color=blue, mark=*] 
+        table[x=time,y=sphinx,col sep=comma] {data/tech_time.csv}; 
+        \addlegendentry{CMUSphinx}
+        
+        \addplot[color=red, mark=*] 
+        table[x=time,y=google,col sep=comma] {data/tech_time.csv}; 
+        \addlegendentry{API Speech (Google)}
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Tiempo de procesamiento de audios de distintas tecnologías.}
+    \label{graf:comp_herramientas}
+  \end{center}
+\end{figure}
+
+
+
+\pgfplotstableread[col sep=comma,header=false]{data/similaridad.csv}\data
+
+\pgfplotsset{
+    percentage plot/.style={
+    point meta=explicit,
+    every node near coord/.append style={
+    align=center,
+    text width=1cm
+    },
+    nodes near coords={
+    \pgfmathtruncatemacro\iszero{\originalvalue==0}
+    \ifnum\iszero=0
+        \pgfmathprintnumber{\originalvalue}$\,\%$
+    \fi},
+    nodes near coords align=vertical,
+    yticklabel=\pgfmathprintnumber{\tick}\,$\%$,
+    ymin=80,
+    ymax=105,
+    enlarge y limits={upper,value=0},
+    visualization depends on={y \as \originalvalue}
+    },
+    percentage series/.style={
+    table/y expr=\thisrow{#1},table/meta=#1
+    }
+}
+\begin{figure}[H]
+  \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                axis on top,
+                width=\textwidth,
+                ylabel=Responses in Percent,
+                xlabel=Duración del audio,
+                percentage plot,
+                ybar=0pt,
+                x unit=\si{s},
+                style={font=\scriptsize},
+                bar width=0.9cm,
+                enlarge x limits=0.15,
+                xtick=data,
+                separate axis lines,
+                axis x line*=bottom,
+                axis y line=none,
+                ]
+                \addplot table [percentage series=1] {\data};
+                \addplot table [percentage series=2] {\data};
+                \legend{CMUSphinx,API Speech (Google)}
+            \end{axis}
+        \end{tikzpicture}
+        \caption{Porcentaje de similitud de transcripciones con texto original.}
+        \label{graf:comp_similitud}
+    \end{center}
+\end{figure}
+
+Tras analizar los datos que se muestran en la \autoref{graf:comp_herramientas} y en la \autoref{graf:comp_herramientas} podemos asegurar que en audios de poca duración (hasta cinco segundos) los dos sistemas ofrecen el resultado en el mismo período de tiempo, mientras que en audios más largos \textit{API Speech (Google)} ofrece el resultado en un menor tiempo. Con respecto a la calidad de la transcripción (similitud con respecto al audio original), el sistema \textit{CMUSphinx} ofrece mejores resultados, aunque cuando la cantidad de palabras pronunciadas es mayor, los dos sistemas ofrecen un resultado con un margen de diferencia que no supera el 1\% de las palabras detectadas.
+
+
+\section{Alternativas Tecnológicas}
+
+En esta sección analizaremos las posibles herramientas que serán necesarias en el proyecto comparándolas en el caso de que existan varias en alguno de estos apartados
+
+\subsubsection{Sistema de reconocimiento de voz}\label{subsub:at-cmu}
+En la \autoref{sec:sistemas_voz} se han analizado las diferentes opciones existentes para el sistema de reconocimiento de voz. Debido a que existen requisitos (Véase \autoref{subsec:analisis_requisitos}) que implican el aprendizaje continuo y la adaptabilidad del sistema a distintos casos de uso. Se decide usar \hyperref[par:cmusphinx]{\textbf{CMUSphinx}}\cite{} como sistema de reconocimiento de voz ya que es el único sistema que permite la adaptabilidad del modelo de lenguaje, modelo fonético y modelo acústico, como se muestra en la \autoref{tab:comp_herramientas}. 
+
+Esta decisión condiciona la elección de las demás herramientas ya que los recursos necesarios deben ser compatibles con este sistema.
+
+\subsubsection{Lenguaje de programación}\label{subsub:at-python}
+Tras analizar los lenguajes de programación más conocidos que son compatibles con el sistema de reconocimiento de voz elegido anteriormente (Java, C, C++ y Python) se ha decidido utilizar \textbf{Python} por el siguiente motivo (entre muchos otros): existencia de herramientas o librerías para todas las necesidades de este proyecto. 
+
+\subsubsection{Sistema de conversión de grafema a fonema}\label{subsub:at-g2p}
+Existen dos sistemas compatibles con los requisitos del proyecto. Estos dos sistemas son: Phonetisaurus\cite{} y sequitur-g2p\cite{}. Ambos sistemas tienen librerías compatibles con Python por lo que la elección de uno u otro se ha basado en la facilidad de instalación y uso. El sistema elegido es \textbf{sequitur-g2p} ya que como se indica en su documentación, con un solo comando se puede generar un modelo a partir de un diccionario fonético inicial; además de poder reentrenar el modelo tantas veces como se desee. Para transcribir palabras utilizando el modelo generado basta con un comando indicándole la ruta del archivo que contenga las palabras que se deseen convertir a fonemas.
+
+\subsubsection{Herramienta para entrenamiento de modelos de lenguaje}\label{subsub:at-srilm}
+El modelo de lenguaje será importante porque se utilizará por varios subsistemas para mejorar el rendimiento del componente de reconocimiento de voz. En este apartado existen tres herramientas que generan un modelo de lenguaje compatible con la herramienta \textit{CMUSphinx} anteriormente explicada.
+
+Estas tres herramientas son SRILM\cite{}, CMUCLMTK\cite{} o LMTool\cite{}. LMTool es una herramienta online que solamente funciona con el idioma inglés, por lo tanto no puede aplicarse al presente proyecto. Tras analizar \textbf{SRILM} y CMUCLMTK se decide por la primera de ellas debido a que no solamente es más sencilla de utilizar, sino que permite más flexibilidad y personalización en la creación de un modelo de lenguaje y en su mejora contínua.
+
+\subsubsection{Herramientas de entrenamiento acústico}\label{subsub:at-sphinxbase}
+Aunque la herramienta más utlizada para generar modelos acústicos es HTK\cite{}, la complejidad de uso es mayor que la utilidad que puede aportar a este proyecto. Otra herramienta de adaptación de modelos acústicos forma parte del paquete de librerias del sistema CMUSphinx; esta libreria es SphinxTrain. Debido a la complejidad de HTK y a la compatibilidad absoluta entre los modelos generados por SphinxTrain y CMUSphinx, se decide descartar la primera opción quedándo así definida \textbf{Sphinxtrain} como la herramienta para el entrenamiento acústico.
+
+\subsubsection{Herramienta de objetos remotos}\label{subsub:at-pyro}
+En el lenguaje Python existen dos herramientas para objetos remotos e invocación remota: Pyro\cite{} y SPyRO\cite{}. SPyRO se encuentra en una versión no estable sin ninguna actualización desde 2008 por lo que se descarta ya que no cumple los \hyperref[subsubsec:restricciones]{requisitos de restricción del sistema} por no estar en una versión estable. Por tanto la herramienta elegida es \textbf{Pyro4} ya que la versión más reciente (versión 5) todavía se encuentra en una versión \textit{beta} (no estable).
+
+\subsubsection{Herramienta de Interfaz Web de Usuario}\label{subsub:at-flask}
+Para la interfaz de usuario existen dos frameworks para Python que permiten la creación de una interfaz web dónde el usuario pueda introducir los datos de entrada al sistema: Django y Flask. Aunque Django\cite{} es un framework más potente y con mayor versatilidad, Flask\cite{} ofrece una mayor facilidad para la creación de una aplicación web sencilla, como la que se desea desarrollar en este proyecto. Por lo tanto se utiliza \textbf{Flask} como framework para la aplicación web del sistema.
+
+\subsubsection{Despliegue de aplicaciones}\label{subsub:at-vagrant}
+En el análisis de requisitos se especifica que el sistema se basará en componentes sustituibles, desacoplados y fácilmente desplegables por separado; por lo que la arquitectura de despliegue idónea para este proyecto son los \textbf{microservicios}.
+
+Orientar el despliegue de la aplicación en microservicios frente a una arquitectura monolítica tiene una serie de ventajas e inconvenientes:
+
+\paragraph{Ventajas}
+Las ventajas de usar una arquitectura basada en microservicios son:
+\begin{itemize}
+    \item Escalabilidad: El sistema se basa en componentes diferenciados, por lo que si alguno de ellos requiere más recursos que otro puede escalarse individualmente.
+    \item Modularidad: En este proyecto las funcionalidades se han dividido en componentes, por lo que la propiedad modular que poseen los microservicios encaja perfectamente con la arquitectura del proyecto.
+    \item Despliegue independiente: Dado que cada componente se ejecuta de forma independiente, se podrán desplegar aquellos servicios que se necesiten en un momento concreto.
+    \item Mantenimiento simple: Si se desea sustituir o mejor uno de los microservicios se podrá hacer sin afectar a los demás siempre que la interfaz de entrada-salida funcione con los mismo datos.
+    \item Entornos en contenedores: Al usar microservicios, cada componente tiene su entorno de ejecución permitiendo que cada uno de ellos posea una versión diferente del mismo framework o lenguaje sin que haya conflictos entre ellos. Una forma de despliegue serían los contenedores ya que permiten la independencia de entornos de ejecución y el despliegue en máquinas diferentes.
+\end{itemize}
+
+\paragraph{Inconvenientes}
+\begin{itemize}
+    \item Pruebas complicadas: Debido a que cada componente está aislado del resto, hacer pruebas de integración se convierte en una tarea más complicada.
+    \item Mayor gestión: Desplegar cada microservicio de forma independiente genera la necesidad de orquestar los microservicios teniendo en todo momento información de los microservicios activos.
+    \item Coste de memoria: Cada microservicio deberá contener información de despliegue independiente, por ejemplo las imágenes de los contenedores. Por lo que utilizar esta arquitectura aumenta los requisitos de memoria.
+    \item Conexión entre componentes: Cada microservicio se ejecutará en un sistema independiente, por lo que supondrá un mayor coste de desarrollo. Además que aumentará el tiempo de envío de mensajes dependiendo de la conexión entre los sistemas.
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{2cm}|p{8cm}|p{8cm}|}
+\cline{2-3}
+ & \textbf{Monolítica} & \textbf{Microservicio} \\ \hline
+\multicolumn{1}{|l|}{\textbf{Arquitectura}} & Construida como un ejecutable lógico individual. & Construida de conjunto de pequeños servicios, cada uno ejecutándose independientemente y comunicándose con mecanismos ligeros. \\ \hline
+\multicolumn{1}{|l|}{\textbf{Modularidad}} & Basado en las propiedades del lenguaje. & Basado en las capacidades de negocio. \\ \hline
+\multicolumn{1}{|l|}{\textbf{Agilidad}} & Los cambios en el sistema afectan a la construcción y el despliegue de una nueva versión de toda la aplicación. & Los cambios puede ser aplicados a cada servicio independientemente. \\ \hline
+\multicolumn{1}{|l|}{\textbf{Escalado}} & Escalado horizontal de la aplicación completa bajo un balanceador de carga. & Cada servicio escala independientemente cuando sea necesario. \\ \hline
+\multicolumn{1}{|l|}{\textbf{Implementación}} & Normalmente escrito en un lenguaje. & Cada servicio se implementa en el lenguaje que mejor convenga. \\ \hline
+\multicolumn{1}{|l|}{\textbf{Mantenibilidad}} & Códigos largos que intimidan a nuevos desarrolladores. & Códigos más pequeños facilmente manejables. \\ \hline
+\multicolumn{1}{|l|}{\textbf{Transacción}} & ACID & BASE \\ \hline
+\end{tabular}%
+}
+\caption{Tabla comparativa de arquitectura monolíticas y arquitecturas basadas en microservicios. Fuente: IBM\cite{}}
+\label{tab:monolitic-vs-microservice}
+\end{table}
+
+Para desplegar la arquitectura de microservicios se utilizará \textbf{Docker}. Docker es una tecnología de virtualización de contenedores software donde desplegar aplicaciones. Es como una máquina virtual muy ligera que proporciona una capa adicional de abstracción y automatización de virtualización de aplicaciones en múltiples sistemas operativos.\cite{}
+
+Para aislar el proyecto y desplegarlo en un solo paso, todo el sistema se englobará en una máquina virtual gestionada por Vagrant y Ansible.
+
+\textbf{Vagrant} es una herramienta para construir entornos de desarrollo completos, encajonados en una máquina virtual. Vagrant reduce el tiempo de configuración del entorno de desarrollo, aumenta la paridad desarrollo/producción y lleva la idea de los recursos computacionales disponibles al escritorio.\cite{}
+
+\textbf{Ansible} es una herramienta para gestionar configuraciones de despliegue y aprovisionamiento de recursos de una máquina de una forma sencilla a través de un lenguaje específico de dominio (DSL) que se utiliza para describir el estado de los servidores\cite{}. Vagrant utilizará Ansible para aprovisionar la maquina que cree sobre el motor de virtualización.
+
+
+
 
 \end{document}
