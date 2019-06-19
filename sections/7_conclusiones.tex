@@ -3,7 +3,68 @@
 
 \chapter{Conclusiones y trabajos futuros}\label{ch:conclusiones}
 \section{Conclusiones}\label{sec:conclusiones}
+Este trabajo se puede resumir en dos palabras: complejo e innovador.
+
+\textbf{Complejo} debido a la gran cantidad de estudios e investigaciones que se han realizado tanto del entorno de las herramientas de reconocimiento de voz como del sistema elegido, CMUSphinx. El reconocimiento de la voz humana es un problema difícil de resolver y es por ello que las grandes empresas líderes en I+D+i estén dedicando muchas horas y recursos en el desarrollo y mejora de estos sistemas.
+
+\textbf{Innovador} porque no existía hasta la fecha un sistema tal y como el que se ha desarrollado y presentado en este documento. Existen multitud de herramientas relacionadas con el reconocimiento de voz, como se ha explicado en el \autoref{ch:estado_arte}, pero ninguna de ellas permite funcionalidades como aumento del vocabulario y mejora del modelo tanto acústico como fonético. Además este proyecto se ha desarrollado bajo las premisas del Software Libre publicándolo con una licencia permisiva (Licencia MIT).
+
+Con este trabajo se han investigado y desarrollado nuevas formas de despliegue de aplicaciones orientadas al reconocimiento de voz. Hasta donde conoce el autor, no existía un sistema de reconocimiento de voz modular (dividido en microservicios) y con la capacidad de desplegarse tanto localmente como distribuidamente.
+
+El autor de este trabajo espera que después de haber conocido este proyecto, el mundo del reconocimiento de la voz humana sea algo más conocido y que la investigación y el desarrollo realizado pueda servir a otros para desarrollar sus propios sistema de \textit{Speech to Text} (Reconocimiento de Voz). Queda mucho trabajo por hacer en este campo y usted, lector de esta memoria, puede contribuir al crecimiento de esta rama de la lingüística computacional.
+
+Volviendo al punto de los Objetivos, en la \autoref{tab:obj-terminados} se analizan los objetivos y el estado de cumplimiento después del desarrollo del proyecto.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{m{12cm} c}
+    \hline
+    \multicolumn{1}{|c|}{\textbf{Objetivo}} & \multicolumn{1}{c|}{\textbf{Consecución}} \\\hline
+    \textbf{O1} - Diseño e implementación de un sistema de tratamiento de audio que sea capaz de transcribir a texto ficheros de audio indexando cada una de las palabras que son reconocidas. & 80\% \\[1cm]
+    \textbf{O2} - Tratamiento del audio de entrada para que se normalicen las características del audio con el que mejorar el sistema. & 90\% \\ [1cm]
+    \textbf{O3} - Aprendizaje de palabras nuevas que se adapten al caso de uso en el que se vaya a aplicar este sistema. & 100\% \\[1cm]
+    \textbf{O4} - Mejora del modelo de lenguaje que se utiliza para determinar la salida del sistema de transcripción de voz a texto. & 100\% \\[1cm]
+    \textbf{O5} - Mejora del modelo acústico que identifica en una señal de audio las palabras pronunciadas por el hablante. & 80\% \\[1cm]
+    \textbf{O6} - Interfaz que permita al usuario utilizar todos los servicios del sistema sin necesidad de procesos tediosos de instalación y configuración. & 90\% \\[1cm]
+    \textbf{O7} - Ninguna de las herramientas utilizadas tendrán un coste por dicha utilización y los 
+    \textit{frameworks} serán de código abierto. & 100\% \\ 
+    \textbf{O8} - Transcripciones con más de un 80\% de coincidencia sobre la transcripción real. & No \\[1cm] \hline
+    \end{tabular}%
+    }
+    \caption{Relación de consecución de objetivos.}
+    \label{tab:obj-terminados}
+\end{table}
+
+A continuación se analizarán los objetivos que no tienen una consecución del 100\%, como se muestra en la \nameref{tab:obj-terminados}
+\begin{itemize}
+    \item \textbf{O1} - Aunque el diseño y la implementación del sistema se ha completado, no se ha realizado una indexación de las palabras reconocidas, sino que se ha almacenado solamente su marca temporal.
+    \item \textbf{O2} - Aunque se realizan filtrados del audio, en ficheros con alto nivel de ruido no se llega a eliminar al 100\% todo el sonido que no es voz humana.
+    \item \textbf{O5} - El sistema realiza una mejora basada en la adaptación de un modelo acústico exitente. No se realiza un entrenamiento del modelo acústico.
+    \item \textbf{O6} - La interfaz procesa la entrada y devuelve una salida, aunque este proceso se realiza de forma síncrona bloqueando la navegación del usuario.
+    \item \textbf{O8} - Las transcripciones no llegan al 80\% de coincidencia ni antes del entrenamiento (con modelos base), ni después de horas de entrenamiento.
+\end{itemize}
+
+\subsection{Conclusión Personal}
+
+
 \section{Trabajos futuros}\label{sec:trabajos_futuros}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Según el informe anual de tecnologías emergentes de 2019 (Gartner Hype Cycle)\cite{Gartner2018}, en 2022 el 70\% de las empresas estarán experimentando con tecnologías inmersivas como plataformas de conversación, que incluyen desde  asistentes personales a chatbots. La mayoría de estas tecnologías pueden utilizar el sistema propuesto en este trabajo para realizar el reconocimiento de voz. Por lo que se proponen los siguientes trabajos futuros:
+
+\subsection{Aumento del entrenamiento de audios}
+Como se ha explicado en la \autoref{sec:val-train}, cuánto mayor es el entrenamiento, mayor la calidad de las transcripciones con respecto a la transcripción original. Por lo tanto, para mejorar el rendimiento del sistema de reconocimiento de voz se debe aumentar el entrenamiento del sistema mediante audios de larga duración con sus correspondientes transcripciones (tan buenas como sean posibles).
+
+\subsection{Detección de hablantes - Speaker Diarization}
+Aunque inicialmente este caso de uso se incluía en el dominio de este trabajo, se descartó debido a la carga de tiempo planteada. Utilizando herramientas de segmentación y clasificación se pueden buscar patrones tanto en las características de la voz como en el modelo de lenguaje utilizado para diferenciar hablantes en un audio. 
+
+Se investigó la herramienta PyAudioAnalysis\cite{Giannakopoulos2015} cómo una posible aproximación.
+
+\subsection{Detección de sentimientos}
+Esta funcionalidad puede incluirse en el sistema sin demasiada dificultad y sería bastante interesante que se identificaran emociones en la voz de las personas del audio. Como en el caso anterior, no solamente con las características de la voz sino por la forma de hablar.
+
+\subsection{API Rest y Despliegue en la nube}
+Una de las funcionalidades que no ofrece el presente sistema es una API Rest de conexión con el sistema para poder realizar operaciones sin necesidad de operar a través de la interfaz web. Esto permitirá la conexión de aplicaciones con este sistema, haciéndolo así más intregable incluso.
+
+Esta API Rest, junto con el sistema completo, se pondría en un servicio de Cloud Computing para estar disponible a través de internet.
 
 \end{document}

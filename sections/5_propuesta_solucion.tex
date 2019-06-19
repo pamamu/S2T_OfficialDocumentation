@@ -25,7 +25,7 @@ El sistema deberá:
 
 \begin{enumerate}
     \item Obtener audios con su correspondiente transcripción temporal dada la ruta del recurso.
-    \item Convertir audio a formato especificado
+    \item Convertir audio a formato especificado.
     \item Reducir el ruido que pueda existir en ficheros de audio.
     \item Normalizar y filtrar audios a las frecuencias de la voz humana.
     \item Dividir fichero en fragmentos en base a los silencios que aparecen en el audio.
@@ -56,12 +56,12 @@ Los requisitos no funcionales del sistema son:
 %%  Requisitos de información   %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Requisitos de información}\label{subsubsec:req_informacion}
-Los requisitos de información del sistema y subsistemas son:.
+Los requisitos de información del sistema y subsistemas son:
 \begin{enumerate}
     \item Estado de los subsistemas.
     \item Configuración de audio a procesar.
     \item Rutas de los modelos que utiliza el sistema y subsistemas.
-    \item Rutas de las librerías que utiliza el sistema y subsistemas
+    \item Rutas de las librerías que utiliza el sistema y subsistemas.
     \item Configuración de parámetros de entrenamiento del modelos acústico, modelo fonético y modelo de lenguaje.
 \end{enumerate}
 
@@ -88,7 +88,7 @@ A continuación se presenta un diagrama de los casos de usos necesarios en el si
     \centering
     \includesvg[scale=0.5]{casos_uso.svg}
     \label{fig:casos_uso}
-    \caption{Diagrama de casos de uso}
+    \caption{Diagrama de casos de uso.}
 \end{figure}
 
 Como se observa en la figura anterior, en el sistema se diferencian cuatro casos de uso:
@@ -108,17 +108,17 @@ Como se observa en la figura anterior, en el sistema se diferencian cuatro casos
 \subsection{Arquitectura del sistema}\label{subsec:arquitectura_sistema}
 Inicialmente este sistema fue concebido con una arquitectura monolítica, es decir, solamente un sistema único donde no hubiera separación de subsistemas. Aunque al principio este planteamiento no planteó problema alguno, con el crecimiento de la cantidad de funcionalidades y requisitos de los subsistemas el sistema se basará en infraestructura formada por microservicios.
 
-En la \autoref{fig:components_resumen} se representa la arquitectura de componentes que tendrá el sistema completo.
+En la \autoref{componentsresumen} se representa la arquitectura de componentes que tendrá el sistema completo.
 
 \begin{figure}[H]
     \centering
     \includesvg[width=\textwidth]{diagrama_general}
-    \label{fig:components_resumen}
-    \caption{Diagrama de componentes del sistema completo}
+    \caption{Diagrama de componentes del sistema completo.}
+    \label{componentsresumen}
 \end{figure}
 
 Los subsistemas que forman cada uno de los microservicios con su correspondiente diagrama de componentes son:
-\paragraph{MainController}\label{par:maincontroller}
+\textbf{MainController}\label{par:maincontroller}
 Subsistema encargado de obtener la información necesaria por parte del usuario y orquestar el resto de subsistemas necesarios para obtener un resultado.
 
 Las funcionalidades de este sistema serán:
@@ -133,12 +133,12 @@ Las funcionalidades de este sistema serán:
     \centering
     \includesvg[width=0.7\textwidth]{components_diagrams/components_main}
     \label{fig:components_main}
-    \caption{Diagrama de componentes del subsistema \textit{MainController}}
+    \caption{Diagrama de componentes del subsistema \textit{MainController}.}
 \end{figure}
 
 Este componente no tendrá datos de entrada/salida ya que es el propio usuario el que interactúa con el sistema.
 
-\paragraph{GetAudioTrans}\label{par:getaudiotrans}
+\textbf{GetAudioTrans}\label{par:getaudiotrans}
 Subsistema responsable de obtener los ficheros de audio y su correspondiente transcripción dadas las direcciones de los recursos.
 
 Las funcionalidades de este sistema serán:
@@ -151,7 +151,7 @@ Las funcionalidades de este sistema serán:
     \centering
     \includesvg[width=\linewidth]{components_diagrams/components_getaudiotrans}
     \label{fig:components_getaudiotrans}
-    \caption{Diagrama de componentes del subsistema \textit{GetAudioTrans}}
+    \caption{Diagrama de componentes del subsistema \textit{GetAudioTrans}.}
 \end{figure}
 
 Los \textbf{datos de entrada} del componente serán:
@@ -165,7 +165,7 @@ Los \textbf{datos de salida} del componente serán:
     \item Fichero donde se almacena la información de las rutas de los ficheros generados (ficheros de audio y ficheros con transcripciones).
 \end{itemize}
 
-\paragraph{AudioProcess}\label{par:audioprocess}
+\textbf{AudioProcess}\label{par:audioprocess}
 Subsistema que adapta un fichero de audio normal a un fichero de audio con las caracterísitcas óptimas para ser procesado por un sistema de reconocimiento y transcripción de voz.
 
 Las funcionalidades de este sistema serán:
@@ -185,7 +185,7 @@ Las funcionalidades de este sistema serán:
     \centering
     \includesvg[width=\linewidth]{components_diagrams/components_audioprocess}
     \label{fig:components_audioprocess}
-    \caption{Diagrama de componentes del subsistema \textit{AudioProcess}}
+    \caption{Diagrama de componentes del subsistema \textit{AudioProcess}.}
 \end{figure}
 
 Los \textbf{datos de entrada} del componente serán:
@@ -203,7 +203,7 @@ Los \textbf{datos de salida} del componente serán:
     \item Información de los fragmentos de audio generados.
 \end{itemize}
 
-\paragraph{G2P}\label{par:g2p}
+\textbf{G2P}\label{par:g2p}
 Subsistema que realiza una transcripción fonética de las palabras que reciba como entrada. Estas palabras serán añadidas a un diccionario fonético que además de ser almacenado en el propio componente, se devolverá como respuesta a la llamada.
 
 Las funcionalidades de este sistema serán:
@@ -217,7 +217,7 @@ Las funcionalidades de este sistema serán:
     \centering
     \includesvg[width=\linewidth]{components_diagrams/components_g2p}
     \label{fig:components_g2p}
-    \caption{Diagrama de componentes del subsistema \textit{G2P}}
+    \caption{Diagrama de componentes del subsistema \textit{G2P}.}
 \end{figure}
 
 Los \textbf{datos de entrada} del componente serán:
@@ -231,7 +231,7 @@ Los \textbf{datos de salida} del componente serán:
     \item Diccionario actualizado con los datos de entrada.
 \end{itemize}
 
-\paragraph{SRILM}\label{par:srilm}
+\textbf{SRILM}\label{par:srilm}
 Este subsistema es el responsable de la generación de un modelo de lenguaje basado en las frases introducidas como entrada de este componente.
 
 Las funcionalidades de este sistema serán:
@@ -244,7 +244,7 @@ Las funcionalidades de este sistema serán:
     \centering
     \includesvg[width=\linewidth]{components_diagrams/components_srilm}
     \label{fig:components_srilm}
-    \caption{Diagrama de componentes del subsistema \textit{SRILM}}
+    \caption{Diagrama de componentes del subsistema \textit{SRILM}.}
 \end{figure}
 
 Los \textbf{datos de entrada} del componente serán:
@@ -259,7 +259,7 @@ Los \textbf{datos de salida} del componente serán:
     \item Modelo del lenguaje mejorado con los datos de entrada.
 \end{itemize}
 
-\paragraph{SPHINXBASE}\label{par:sphinxbase}
+\textbf{SPHINXBASE}\label{par:sphinxbase}
 Subsistema encargado de la generación de un modelo acústico mejorado con la información de los audios de entrada al componente.
 
 Las funcionalidades de este sistema serán:
@@ -272,7 +272,7 @@ Las funcionalidades de este sistema serán:
     \centering
     \includesvg[width=\linewidth]{components_diagrams/components_sphinxbase}
     \label{fig:components_sphinxbase}
-    \caption{Diagrama de componentes del subsistema \textit{SPHINXBASE}}
+    \caption{Diagrama de componentes del subsistema \textit{SPHINXBASE}.}
 \end{figure}
 
 Los \textbf{datos de entrada} del componente serán:
@@ -287,7 +287,7 @@ Los \textbf{datos de salida} del componente serán:
     \item Directorio con los ficheros del modelo acústico.
 \end{itemize}
 
-\paragraph{Training}\label{par:training}
+\textbf{Training}\label{par:training}
 Subsistema encargado de gestionar todo el proceso de aprendizaje de los modelos necesarios para el sistema de transcripción de voz a texto. Este subsistema gestiona las llamadas a los subsistemas encargados de este aprendizaje: \hyperref[par:g2p]{G2P}, \hyperref[par:srilm]{SRILM} y \hyperref[par:sphinxbase]{SPHINXBASE}.
 
 Las funcionalidades de este sistema serán:
@@ -301,7 +301,7 @@ Las funcionalidades de este sistema serán:
     \centering
     \includesvg[width=\linewidth]{components_diagrams/components_training}
     \label{fig:components_training}
-    \caption{Diagrama de componentes del subsistema \textit{Training}}
+    \caption{Diagrama de componentes del subsistema \textit{Training}.}
 \end{figure}
 
 Los \textbf{datos de entrada} del componente serán:
@@ -318,13 +318,13 @@ Los \textbf{datos de salida} del componente serán:
     \item Directorio que contiene modelo acústico mejorado.
 \end{itemize}
 
-\paragraph{Speech2Text}\label{par:speech2text}
+\textbf{Speech2Text}\label{par:speech2text}
 Este subsistema es el encargado de realizar una transcripción de voz a texto y generar un fichero con información temporal.
 
 
 Las funcionalidades de este sistema serán:
 \begin{enumerate}
-    \item Obtener la información necesario a partir de los parámetros de entrada del componente.
+    \item Obtener la información necesaria a partir de los parámetros de entrada del componente.
     \item Realizar transcripción de voz a texto y guardar la información temporal (tiempo inicial y tiempo final) de cada una de las palabras transcritas.
     %%\item Analizar los diferentes hablantes que existen en el audio.
     \item Procesar la salida del componentes con la información de la transcripción.%% y separación de hablantes en el audio.
@@ -334,7 +334,7 @@ Las funcionalidades de este sistema serán:
     \centering
     \includesvg[width=\linewidth]{components_diagrams/components_speech2text}
     \label{fig:components_speech2text}
-    \caption{Diagrama de componentes del subsistema \textit{Speech2Text}}
+    \caption{Diagrama de componentes del subsistema \textit{Speech2Text}.}
 \end{figure}
 
 Los \textbf{datos de entrada} del componente serán:
@@ -361,7 +361,7 @@ Cada componente funcionará como un objeto al que podrán acceder los demás sis
 \begin{figure}[H]
     \centering
     \includesvg[width=0.7\textwidth]{arquitectura_bw}
-    \caption{Diagrama de conexión entre componentes del sistema}
+    \caption{Diagrama de conexión entre componentes del sistema.}
     \label{fig:componentes_conexion}
 \end{figure}
 
@@ -373,7 +373,7 @@ En la \autoref{fig:componentes_conexion} se distinguen dos tipos de conexiones:
 
 Una vez explicados los componentes, se detallan las distintas llamadas que existen entre los sistemas a través de diagramas de secuencia para los siguientes casos de uso:
 
-\paragraph{Diagrama de secuencia para \textit{Descargar audios con transcripciones}}
+\textbf{Diagrama de secuencia para \textit{Descargar audios con transcripciones}}
 
 Para este caso de uso, el componente \hyperref[par:maincontroller]{MainController} ejecutará el método remoto \verb+run()+ del componente  \hyperref[par:getaudiotrans]{GetAudioTrans} pasando por parámetros los datos de entrada necesarios por este sistema y la carpeta donde se guardarán los datos de salida.
 
@@ -384,11 +384,11 @@ En último lugar, el objeto remoto devolverá al componente \hyperref[par:mainco
 \begin{figure}[H]
     \centering
     \includesvg[width=0.6\textwidth]{flow_diagrams/flow_getaudiotrans}
-    \caption{Diagrama de secuencia del caso de uso \textit{obtener de fichero de audio y transcripción}}
+    \caption{Diagrama de secuencia del caso de uso \textit{obtener de fichero de audio y transcripción}.}
     \label{fig:flow_getaudiotrans}
 \end{figure}
 
-\paragraph{Diagrama de secuencia para \textit{Mejorar modelos para sistemas de reconocimiento de voz}}
+\textbf{Diagrama de secuencia para \textit{Mejorar modelos para sistemas de reconocimiento de voz}}
 Para el mencionado caso de uso, el componente \hyperref[par:maincontroller]{MainController} ejecutará el método remoto \verb+run()+ del componente  \hyperref[par:training]{Training} pasando por parámetros los datos de entrada necesarios por este sistema y la carpeta donde se guardarán los datos de salida.
 
 Una vez se haya invocado al método remoto, el componente \hyperref[par:training]{Training} ejecutará 3 llamadas a procedimientos remotos:
@@ -407,7 +407,7 @@ Finalmente el componente \hyperref[par:training]{Training} devolverá como salid
     \label{fig:flow_training}
 \end{figure}
 
-\paragraph{Diagrama de secuencia para \textit{Mejorar audio para sistemas de reconocimiento de voz}}
+\textbf{Diagrama de secuencia para \textit{Mejorar audio para sistemas de reconocimiento de voz}}
 
 Para este caso de uso, el componente \hyperref[par:maincontroller]{MainController} ejecutará el método remoto \verb+run()+ del componente  \hyperref[par:audioprocess]{AudioProcess} pasando por parámetros los datos de entrada necesarios por este sistema y la carpeta donde se guardarán los datos de salida.
 
@@ -422,7 +422,7 @@ En último lugar, el objeto remoto devolverá al componente \hyperref[par:mainco
     \label{fig:flow_audioprocess}
 \end{figure}
 
-\paragraph{Diagrama de secuencia para \textit{Transcribir audio}}
+\textbf{Diagrama de secuencia para \textit{Transcribir audio}}
 
 Para este caso de uso, el componente \hyperref[par:maincontroller]{MainController} ejecutará el método remoto \verb+run()+ del componente  \hyperref[par:speech2text]{Speech2Text} pasando por parámetros los datos de entrada necesarios por este sistema y la carpeta donde se guardarán los datos de salida.
 
@@ -480,19 +480,19 @@ Además de las acciones anteriormente mencionadas, la interfaz proporcionará un
 
 En la \autoref{img:interfaz-web} se puede observar la interfaz que ofrece el sistema.
 
-% \begin{figure}[h]
-%     \centering
-%     \includegraphics[width=\linewidth]{logo_epcc.png}
-%     \caption{Interfaz de usuario de la Aplicación Web}
-%     \label{img:interfaz-web}
-% \end{figure}
+\begin{figure}[H]
+     \centering
+     \includegraphics[width=\linewidth]{interfaz_web.png}
+     \caption{Interfaz de usuario de la Aplicación Web}
+     \label{img:interfaz-web}
+ \end{figure}
 
 \subsection{Componente GetAudioTrans}\label{subsec:impl_getaudiotrans}
 Este componente será el encargado de obtener y almacenar el audio y la transcripción de los recursos que se introducen como parámetro de entrada.
 
 La especificación tanto de los \textbf{datos de entrada y salida}, como la de las funcionalidades se describen en el apartado \nameref{par:getaudiotrans} de la \nameref{subsec:arquitectura_sistema}.
 
-Una posible \textbf{ejemplo de la salida} se muestra en el \autoref{code:input_getaudiotrans}.
+Un posible \textbf{ejemplo de la salida} se muestra en el \autoref{code:input_getaudiotrans}.
 \lstinputlisting[   language=json, 
                     caption = {Ejemplo de entrada al componente \textit{GetAudioTrans}}, label={code:input_getaudiotrans}]
                 {input_getaudiotrans.json}
@@ -522,11 +522,11 @@ Cada una de estas funcionalidades se implementarán de la siguiente forma:
     \item \textbf{Filtrado del audio}: Este filtrado se realizará sobre las frecuencias medias de las voz (200 Hz - 3.000 Hz). Se utilizará la funcionalidad de filtros de frecuencia de la herramienta SOX.
     \item \textbf{Normalización del audio}: Esta normalización se aplicará utilizando la herramienta de normalización de la libreria SOX.
     \item \textbf{Eliminación de ruido}: Para eliminar el ruido de fondo se recorrerá cada milisegundo del audio de entrada. Se generará un fichero de audio con los tramos donde el volumen es menor de cierto umbral \footnote{Parámetro modificable en el fichero audio\_config.json\label{footnote:audio_modificable}}. Con este fichero se construirá un perfil de ruido que se aplicará al audio de entrada con la libreria SOX.
-    \item \textbf{Particionado de audio}: Una vez haya reducido el ruido se separará el audio original en tramos que se asemejarán a frases eliminando los silencios. Para ellos se recorrerá el audio analizando el volumen de cada milisegundo. Si el volumen es menor de cierto valor\textsuperscript{\ref{footnote:audio_modificable}} se considerará un silencio. Si hay un número determinado de silencios consecutivos\textsuperscript{\ref{footnote:audio_modificable}} se recortará el audio eliminando ese período y generando así un nuevo fichero de audio.
+    \item \textbf{Particionado de audio}: Una vez se ha reducido el ruido se separará el audio original en tramos que se asemejarán a frases eliminando los silencios. Para ellos se recorrerá el audio analizando el volumen de cada milisegundo. Si el volumen es menor de cierto valor\textsuperscript{\ref{footnote:audio_modificable}} se considerará un silencio. Si hay un número determinado de silencios consecutivos\textsuperscript{\ref{footnote:audio_modificable}} se recortará el audio eliminando ese período y generando así un nuevo fichero de audio.
     \item \textbf{Procesado de la respuesta}: La respuesta la formará un fichero de información sobre los ficheros de audio particionados. Por cada fichero se indicará el intervalo de tiempo con respecto al audio original.
 \end{enumerate}
 
-Este proceso está ilustrado en la \autoref{fig:audio-processed}. En este ejemplo (sin valores de referencia) se puede observar como se partionará el audio original (señal azul) en distintos audios más pequeños (color verde). Esta partición se hará cuando el silencio (señal azul menor que umbral silencio - marca roja) tenga una duración mayor que la establecida.
+Este proceso está ilustrado en la \autoref{fig:audio-processed}. En este ejemplo (sin valores de referencia) se puede observar como se particiona el audio original (señal azul) en distintos audios más pequeños (color verde). Esta partición se hará cuando el silencio (señal azul menor que umbral silencio - marca roja) tenga una duración mayor que la establecida.
 
 \begin{figure}[H]
     \centering
@@ -577,7 +577,7 @@ Para el tratamiento de modelos de lenguaje y generación de modelos mejorados se
 
 Dentro del componente se ejecutan una serie de procedimientos en el siguiente orden:
 \begin{enumerate}
-    \item Particionado de datos: Primeramente se separa el conjunto de frases que se van a utilizar para entrenar al sistema y el conjunto de frases que se van a utilizar para probar el modelo generado.
+    \item \textbf{Particionado de datos}: Primeramente se separa el conjunto de frases que se van a utilizar para entrenar al sistema y el conjunto de frases que se van a utilizar para probar el modelo generado.
     \item \textbf{Generación de modelo}: Se genera un modelo de lenguaje con las frases que se han separado en el paso anterior destinadas a entrenar al sistema.
     \item \textbf{Mezcla de modelos}: Una vez el nuevo modelo de lenguaje se ha generado, se utilizan las frases destinadas a la prueba para obtener la puntuación en ambos modelos. Con esta puntuación y a través del procedimiento \textit{compute-best-mix} de la herramienta SRILM, se generará un valor \( \lambda \) que ponderará las probabilidades internas del modelo de lenguaje produciendo así un modelo de lenguaje mejorado.
 \end{enumerate}
@@ -611,7 +611,7 @@ Los procedimientos ejecutados por este componente en orden de procesamiento son:
 
 Un \textbf{ejemplo de la salida} puede visualizarse en el \autoref{code:output_sphinxbase}.
 
-\lstinputlisting[language=json, caption = {Ejemplo de salida del componente \textit{SPHINXBASE}}, label={code:output_sphinxbase}]{output_sphinxbase.json}
+\lstinputlisting[language=json, caption = {Ejemplo de salida del componente \textit{SPHINXBASE}.}, label={code:output_sphinxbase}]{output_sphinxbase.json}
 
 \subsection{Componente Training}\label{subsec:impl_training}
 Este componente tendrá la responsabilidad de generar un diccionario fonético actualizado con los datos de entrada.
@@ -668,12 +668,13 @@ La construcciones de imágenes y contenedores se hará a través de un fichero \
 En este fichero también se especifica la creación de enlaces de volúmenes para actualizar el código en los contenedores sin necesidad de volver a crear la la estructura completa. Además todos los contenedores compartirán la carpeta \textit{shared\_folder}.
 
 \subsubsection{Despliegue de infraestructura}\label{subsubsec:despliegue}
-Para desplegar la infraestructura solamente habrá que ejecutar el comando \textit{vagrant up} sobre la raiz del proyecto. Es necesario tener instaladas las herramientas mencionadas en la \autoref{subsubsec:tecnologia} para ejecutar este comando.
+Para desplegar la infraestructura se seguirán los pasos especificados en \nameref{ch:anexo_manual}.
 
 Una vez ejecutado el comando se ejecutarán los siguientes procedimiento:
 \begin{enumerate}
-    \item \textbf{Creación de una máquina virtual} con las siguientes características:
-    \begin{table}[]
+    \item Obtención de la \textbf{imagen del sistema operativo}, en este caso CentOS 7.
+    \item \textbf{Configuración del HW} de la máquina virtual con las siguientes especificaciones:
+    \begin{table}[H]
     \centering
         \begin{tabular}{ |c|c| } 
          \hline
@@ -690,16 +691,39 @@ Una vez ejecutado el comando se ejecutarán los siguientes procedimiento:
          \textbf{Carpeta compartida} & \textit{shared\_folder} $\,\to\,$ \textit{/srv/shared\_folder/}\\ 
          \hline
         \end{tabular}
-    \caption{Especificaciones del hardware de la máquina virtual}
+    \caption{Especificaciones del hardware de la máquina virtual.}
     \label{tab:my_label}
     \end{table}
     
-    \item \textbf{Aprovisionamiento de la máquina virtual} con Ansible: A través de Ansible se instalarán todas las herramientas necesarias además de arrancar la infraestructura de contenedores. Para este proyecto se ha contruido un rol personalizado \textit{s2t.common} que ejecutará los siguientes procedimientos:
+    \item Encendido de máquina virtual.
+    
+    \item Configuración de \textbf{carpetas compartidas} del sistema. Se enlazarán las carpetas del proyecto con la máquina virtual para que cualquier modificación de código se actualice en tiempo real en la máquina virtual.
+    
+    \item \textbf{Aprovisionamiento de la máquina virtual} con Ansible: A través de Ansible se instalarán todas las herramientas necesarias además de arrancar la infraestructura de contenedores: pip y docker. Para este proyecto se ha contruido de manera adicional un rol personalizado \textit{s2t.common} que ejecutará los siguientes procedimientos:
     \begin{enumerate}
-        \item \textbf{Instalación de Portainer}: Herramienta para la gestión de contenedores a través de una interfaz web. Se levantará en el puerto 9000 de la Maquina Virtual.
+        \item \textbf{Instalación de Portainer}: Herramienta para la gestión de contenedores a través de una interfaz web. Se levantará en el puerto 9000 de la maquina virtual.
         \item \textbf{Gestión de permisos para Docker}.
-        \item Ejecución de \textbf{Docker Compose} para la construcción de todos los servicios y recursos
+        \item Instalación de htop para monitorizar el HW de la máquina virtual.
+        \item Ejecución de \textbf{Docker Compose} para la construcción de todos los servicios y recursos. El despliegue de estos contenedores se especifica detalladamente en la sección \ref{subsubsec:desp-contenedores}.
     \end{enumerate}
 \end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{portainer-3}
+    \caption{Portainer: Gestión de contenedores activos.}
+    \label{img:trello}
+\end{figure}
+
+\subsubsection{Despliegue de contenedores}\label{subsubsec:desp-contenedores}
+Los contenedores se construyen y despliegan siguiendo el \textbf{orden} establecido en el fichero \textit{docker-compose.yml}. En \href{ch:anexo_docker}{este fichero} se detallan las especificaciones de cada uno de los contenedores.
+
+Por cada contenedor se detallan los siguientes datos: nombre, fichero de construcción de contenedor (Dockerfile), imagen base, volúmenes de almacenamiento, puertos y variables de entorno.
+
+En este fichero se crea una \textbf{dependencia} entre el contenedor \textit{MainController} y todos los demás al añadir un \textit{healthcheck} (comprueba si el contenedor se ha ejecutado correctamente) en el contenedor principal para que no se ejecute ningún contenedor antes de que el sistema principal esté en funcionamiento.
+
+Todos los contenedores comparten el código fuente con la máquina virtual, que a su vez lo comparte con la maquina nativa donde se esté ejecutando la máquina virtual. Esto significa que cualquier cambio en el código fuente en la máquina nativa, afectará directamente a los contenedores en ejecución de la maquina virtual. Esta asociación de directorios se realiza a través de los \textbf{volúmenes} montados.
+
+La configuración de ejecución de cada uno de los contenedores se especifica en los ficheros \textit{DockerFile} de cada componente. En estos ficheros se indican las instrucciones a ejecutar para la \textbf{construcción de las imágenes}. Estas instrucciones son por ejemplo: instalación de librerías necesarias, compilación de código fuente necesario, preparación de ficheros para la ejecución del componente o el comando por defecto al ejecutar el contenedor.
 
 \end{document}
