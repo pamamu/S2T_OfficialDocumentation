@@ -2,6 +2,189 @@
 \begin{document}
  
 \chapter{Validación tecnológica}\label{ch:validacion}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+En este capítulo se explicarán las pruebas realizadas utilizando el sistema en la versión v.1.0 (versión entregada), los resultados obtenidos para cada uno de estas pruebas y la evolución del sistema con el entrenamiento.
+
+Todas estas pruebas se han realizado con un ordenador Macbook Pro 15" 2016 desplegando el proyecto cómo se indica en el \autoref{ch:anexo_manual}. La conexión a internet se realiza por cable desde la red de la Universidad de Extremadura con una velocidad de bajada de 93,48 Mbps y 90,77 Mbps de subida.
+
+\section{Pruebas de funcionamiento general}\label{sec:val-general}
+En este apartado se testeará el sistema de forma general comprobando el correcto funcionamiento del despliegue y de los sistemas de gestión del proyecto.
+
+Se seguirán los pasos indicados en el \nameref{ch:anexo_manual} probando que todo funcione correctamente.
+
+En un equipo con los requisitos instalados y sin ninguna ejecución previa se \textbf{desplegará el proyecto}.
+
+Los pasos seguidos han sido: Descarga de todos los repositorios y ejecución de la máquina virtual a través de Vagrant. Una vez ejecutada la máquina virtual no se muestra ningún error al ejecutar el comando de arranque. Tras tres ejecuciones de arranque, la media de tiempo que el sistema necesita para crear todos los recursos necesarios es de \textbf{16,58 minutos}.
+
+Una vez la máquina está en funcionamiento, se prueba acceder a la IP de la Vagrant (192.168.4.95) y al puerto del gestor de contenedores (9000) a través del navegador. Cuando se accede, se muestra la pantalla de bienvenida, por lo que podemos asegurar que la máquina virtual y el sistema gestor de contenedores funcionan correctamente.
+
+En un estado en el que la máquina virtual está creada pero no en ejecución, después de realizar cinco ejecuciones de encendido el tiempo medio de este proceso de encendido es de 23,6 segundos.
+
+\section{Pruebas de obtención de audios}\label{sec:val-get}
+En el presente apartado se analizará el comportamiento del sistema en el proceso de obtención de audios y transcripciones.
+
+Para este análisis seleccionaremos tres direcciones web diferentes donde se encuentran los recursos de audio y sus transcripciones. En la \autoref{tab:com-tiempo-get} se muestra una comparativa del tiempo que ha necesitado el sistema para completar las tres tareas que se procesan por cada audio y transcripción requeridos. Todos los audios obtenidos tienen una duración de 60 minutos.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{l|c|c|c|c|}
+        \cline{2-5}
+         & \multicolumn{1}{c|}{\textbf{Obtener HTML}} & \multicolumn{1}{c|}{\textbf{Obtener Audio}} & \multicolumn{1}{c|}{\textbf{Obtener Transcripción}} & \multicolumn{1}{c|}{\textbf{Total}} \\ \hline
+        \multicolumn{1}{|l|}{\href{https://play.cadenaser.com/audio/cadenaser_hoyporhoy_20190614_110000_120000/}{\textbf{Programa de Radio 1}}} & 6,64 s & 12,43 s & 0,25 s & 19,32 s \\ \hline
+        \multicolumn{1}{|l|}{\href{https://play.cadenaser.com/audio/cadenaser_hoyporhoy_20190614_060000_070000/}{\textbf{Programa de Radio 2}}} & 10,73 s & 6,98 s & 0,26 s & 17,97 s \\ \hline
+        \multicolumn{1}{|l|}{\href{https://play.cadenaser.com/audio/cadenaser_hoyporhoy_20190614_070000_080000/}{\textbf{Programa de Radio 3}}} & 7,37 s & 9,67 s & 0,28 s & 17,32 s \\ \hline
+    \end{tabular}%
+    }
+    \caption{Tiempos de ejecución de \textit{obtención de audios y transcripciones}.}
+    \label{tab:com-tiempo-get}
+\end{table}
+
+Aunque los tiempos de los subprocesos varíen, el tiempo final mantiene una duración media de 18,20 segundos con una desviación estándar de 0,83 segundos.
+
+\section{Pruebas de procesamiento de audios}\label{sec:val-audiprocess}
+A continuación se detallan las pruebas realizadas en el procesamiento de los audios para adaptarlos a los sistemas de reconocimiento de voz.
+
+Para esta prueba se ha dividido el primero de los audios obtenidos en el \hyperref[sec:val-get]{apartado anterior} en fragmentos de 5, 10, 30, 60, 150, 300, 600, 900, 1200, 1800 y 3600 segundos. Se ejecutará el sistema de procesado de audio tres veces por cada audio introducido, dando así los datos medios que se muestran en la \autoref{tab:timing-process} y en la gráfica \autoref{graf:timing-process}.
+
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Tiempo Audio}} & \multirow{2}{*}{\textbf{Conversión {[}s{]}}} & \multicolumn{3}{c|}{\textbf{Preprocesado}} & \multirow{2}{*}{\textbf{Split {[}s{]}}} & \multirow{2}{*}{\textbf{Out {[}s{]}}} & \multirow{2}{*}{\textbf{Total {[}s{]}}} \\ \cline{3-5}
+         &  & \textbf{Filtrado {[}s{]}} & \textbf{Normalizado {[}s{]}} & \textbf{Reducción Ruido {[}s{]}} &  &  &  \\ \hline
+        5 s & 0.063 & 0.019 & 0.014 & 0.171 & 0.186 & 0.031 & 0.484 \\ \hline
+        10 s & 0.091 & 0.022 & 0.024 & 0.305 & 0.804 & 0.033 & 1.279 \\ \hline
+        30 s & 0.214 & 0.051 & 1.272 & 1.273 & 3.238 & 0.057 & 6.105 \\ \hline
+        60 s & 0.409 & 0.064 & 0.047 & 3.762 & 4.438 & 0.076 & 8.796 \\ \hline
+        150 s & 1.069 & 0.174 & 0.129 & 19.954 & 9.802 & 0.192 & 31.321 \\ \hline
+        300 s & 1.886 & 0.284 & 0.192 & 80.460 & 21.732 & 0.396 & 104.950 \\ \hline
+        600 s & 3.828 & 0.669 & 0.685 & 82.586 & 38.154 & 0.906 & 126.829 \\ \hline
+        900 s & 5.697 & 1.373 & 0.871 & 96.201 & 97.570 & 1.553 & 203.265 \\ \hline
+        1200 s & 7.413 & 1.601 & 0.962 & 102.296 & 152.052 & 2.031 & 266.356 \\ \hline
+        1800 s & 11.363 & 1.632 & 1.358 & 116.699 & 214.761 & 3.213 & 349.026 \\ \hline
+        3600 s & 40.413 & 3.012 & 2.411 & 167.827 & 411.250 & 7.378 & 632.291 \\ \hline
+    \end{tabular}%
+    }
+    \caption{Relación de tiempos de respuesta de los subprocesos del tratamiento del audio.}
+    \label{tab:timing-process}
+\end{table}
+
+\begin{figure}[H]
+  \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=0.8\linewidth,
+                xlabel = Duración de audio de entrada,
+                x unit=s,
+                ylabel = Tiempo de procesamiento total,
+                y unit=s,
+                grid=major, 
+                grid style={dashed,gray!30},
+                ]
+                \addplot[color=blue, mark=*] table[x=time,y=total,col sep=comma] {data/timingaudioprocess.csv};
+            \end{axis}
+        \end{tikzpicture}
+    \caption{Tiempo de procesamiento de audios de distinta duración.}
+    \label{graf:timing-process}
+  \end{center}
+\end{figure}
+
+Tras analizar los datos obtenidos podemos concluir que aunque todos los subprocesos aumentan su tiempo de respuesta en relación a la duración del audio, los subprocesos de \textit{Reducción de Ruido} y \textit{Split} son los que más tiempo requieren debido al procesamiento de bajo nivel que deben hacer.
+
+
+\section{Pruebas de entrenamiento de modelos}\label{sec:val-train}
+En este apartado se analizarán los datos obtenidos en el entrenamiento de los modelos y la mejora en relación a la cantidad de entrenamiento proporcionada.
+
+Primeramente se realizará una comparativa del tiempo de respuesta de cada uno de los subsistemas que componen el sistema de entrenamiento de modelos.
+
+Se han realizado cuatro pruebas diferentes. En la tabla \autoref{tab:timing-training} se muestra información sobre los audios utilizados y la cantidad de palabras y frases que aparecen en cada uno de ellos.
+
+%TABLA
+\begin{table}[]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Duración audio entrada} [s] & \textbf{Número de palabras} & \textbf{Número de frases} & \textbf{Tiempo de entrenamiento} [s] \\ \hline
+        300 & 68 & 17 & 52 \\ \hline
+        500 & 68 & 17 & 52 \\ \hline
+        700 & 229 & 56 & 66 \\ \hline
+        1000 & 340 & 105 & 68 \\ \hline
+    \end{tabular}%
+    }
+    \caption{Comparativa de tiempos, palabras y frases de los audios de entrenamiento.}
+    \label{tab:timing-training}
+\end{table}
+
+Podemos observar que en el audio con la duración de 300 segundos y en el audio con duración de 500 segundos existen la misma cantidad de palabras y de frases. Esto es debido a que en estos dos audios la intervención humana es la misma ya que se descarta cualquier otro tipo de sonido que no sea la voz humana.
+
+\section{Pruebas de reconocimiento de voz}\label{sec:val-s2t}
+A continuación se realizarán pruebas sobre el sistema de reconocimiento de voz con varios audios diferentes y se analizará el resultado.
+
+Primeramente se analizará el funcionamiento de la transcripción de voz con un \textbf{modelo de lenguaje} sin comprimir y uno comprimido, ya que el sisteme elegido permite los dos casos.
+
+Tras diez pruebas con audios de diferente duración, el tiempo de respuesta media al utilizar un modelo comprimido es un 25 \% (4 veces más rápido) del tiempo de respuesta media utilizando un modelo sin comprimir.
+
+Para calcular el \textbf{tiempo medio de reconocimiento} se realizan cinco transcripciones por audio. Estos audios irán en períodos de 5 segundos desde 5 segundos hasta 120 segundos. Por tanto se han realizado 120 pruebas del sistema. En la gráfica \autoref{graf:timing-s2t} se pueden observar la evolución del tiempo de respuesta medio para cada duración.
+
+\begin{figure}[H]
+  \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                width=0.8\linewidth,
+                xlabel = Duración de audio de entrada,
+                x unit=s,
+                ylabel = Tiempo de procesamiento medio,
+                y unit=s,
+                grid=major, 
+                grid style={dashed,gray!30},
+                ]
+                \addplot[color=red, mark=*] table[x=time,y=total,col sep=comma] {data/s2t_timing.csv};
+            \end{axis}
+        \end{tikzpicture}
+    \caption{Tiempo de procesamiento de audios en reconocimiento de voz.}
+    \label{graf:timing-s2t}
+  \end{center}
+\end{figure}
+
+En la tabla \autoref{tab:timing-s2t} referente a las pruebas ejecutadas se puede observar tanto el \textit{Puntuación de modelo} (puntuación a escala logarítmica de la coincidencia del audio con la estimación de audio generada por el modelo). También se muestra la \textit{Seguridad de transcripción} (puntuación a escala logarítmica de la confianza con la que se genera la transcripción). Cuanto mayor sean estos números, mayor puntuación; por lo tanto se puede observar que los mejores resultados se obtienen en audios breves, mientras que cuanto más largo es el audio, menor es la puntuación.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+    \textbf{Duración de audio} [s] & \textbf{Tiempo de respuesta} [s] & \textbf{Puntuación de modelo} & \textbf{Seguridad de transcripción} \\ \hline
+    5 & 3.95 & 4.51E-04 & 8.67E-09 \\ \hline
+    10 & 6.77 & 2.53E-07 & 2.31E-15 \\ \hline
+    15 & 10.2 & 1.29E-11 & 4.92E-23 \\ \hline
+    20 & 16.76 & 8.08E-15 & 3.23E-32 \\ \hline
+    25 & 19.24 & 1.52E-18 & 1.47E-37 \\ \hline
+    30 & 23.66 & 1.56E-22 & 2.35E-45 \\ \hline
+    35 & 28 & 1.43E-27 & 4.14E-55 \\ \hline
+    40 & 31.96 & 1.93E-31 & 6.17E-69 \\ \hline
+    45 & 38.18 & 2.54E-35 & 3.69E-78 \\ \hline
+    50 & 49.94 & 3.90E-39 & 2.13E-96 \\ \hline
+    55 & 48.92 & 7.36E-44 & 1.69E-103 \\ \hline
+    60 & 59.91 & 1.31E-47 & 3.43E-122 \\ \hline
+    65 & 65 & 1.39E-51 & 6.78E-134 \\ \hline
+    70 & 62.37 & 7.25E-56 & 8.41E-143 \\ \hline
+    75 & 74.24 & 1.45E-60 & 7.37E-157 \\ \hline
+    80 & 85.2 & 1.27E-64 & 2.44E-168 \\ \hline
+    85 & 88.46 & 1.49E-69 & 1.03E-179 \\ \hline
+    90 & 101.36 & 4.95E-75 & 3.93E-197 \\ \hline
+    95 & 111.56 & 8.45E-80 & 2.19E-214 \\ \hline
+    100 & 106.44 & 3.12E-84 & 2.33E-222 \\ \hline
+    105 & 124.03 & 5.49E-89 & 4.59E-236 \\ \hline
+    110 & 128.19 & 5.09E-94 & 6.85E-250 \\ \hline
+    115 & 130.71 & 4.76E-98 & 1.49E-261 \\ \hline
+    120 & 146.26 & 1.55E-102 & 4.40E-265 \\ \hline
+    \end{tabular}%
+    }
+    \caption{Resultados de las pruebas realizadas en el servicio de reconocimiento de voz.}
+    \label{tab:timing-s2t}
+\end{table}
 
 \end{document}

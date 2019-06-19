@@ -32,29 +32,25 @@ El procedimiento más común utilizado en los sistemas de reconocimiento del hab
 
 Para tratar de obtener la máxima información del audio, este se divide en fragmentos muy pequeños (del orden de milisegundos) para extraer por cada uno de ellos un vector de características que representan el habla. Las tecnologías que se usarán en el presente proyecto utilizarán un vector de 39 características.
 
-En el proceso de reconocimiento se utilizan \textbf{modelos}, que van a representar el vector de características más probable para cada fonema. El modelo más usado en sistemas de reconocimiento de voz es Hidden Markov Model \cite{}. Dependiendo de la aplicabilidad del modelo, se pueden diferenciar:
+En el proceso de reconocimiento se utilizan \textbf{modelos}, que van a representar el vector de características más probable para cada \gls{fonema}. El modelo más usado en sistemas de reconocimiento de voz es Hidden Markov Model \cite{Fine1998}. Dependiendo de la aplicabilidad del modelo, se pueden diferenciar:
 \begin{itemize}
     \item \textbf{Modelo acústico}: Modelo formado por las propiedades acústicas de cada fonema.
-    \item \textbf{Modelo fonético}: Diccionario que contiene un relación de palabras a fonemas. En el lenguaje utilizado en este proyecto (castellano) no existirán problemas dado que existe un única pronunciación para cada grafema. Sin embargo, en idiomas más complejos fonéticamente como el inglés, estos diccionarios no suelen ser muy efectivos.
-    \item \textbf{Modelo de lenguaje}: Modelo que define que palabra podría ser la siguiente a un conjunto de palabras reconocidas. Esto ayudará al sistema de reconocimiento a no efectuar una comparación fonética con todas las palabras del lenguaje, sino con las que más probabilidades tengan de aparecer.
+    \item \textbf{Modelo fonético}: Diccionario que contiene un relación de palabras a fonemas. En el lenguaje utilizado en este proyecto (castellano) no existirán problemas dado que existe un única pronunciación para cada \gls{grafema}. Sin embargo, en idiomas más complejos fonéticamente como el inglés, estos diccionarios no suelen ser muy efectivos.
+    \item \textbf{Modelo de lenguaje}: Modelo que define qué palabra podría ser la siguiente a un conjunto de palabras reconocidas. Esto ayudará al sistema de reconocimiento a no efectuar una comparación fonética con todas las palabras del lenguaje, sino con las que más probabilidades tengan de aparecer.
 \end{itemize}
 
 \section{Sistema de transcripción de voz a texto existentes}\label{sec:sistemas_voz}
 En el mercado actual existen multitud de herramientas de reconocimiento de voz. A continuación se analizarán cuatro de ellas de forma individual para posteriormente realizar una comparativa: 
 
-\paragraph{CMUSphinx}\label{par:cmusphinx}
-Sistema de reconocimiento de voz de código abierto para aplicaciones tanto en dispositivo móvil como en servidores. Los lenguajes soportados son: C, C++, C\#, Python, Ruby, Java, Javascript.\cite{}
+\label{par:cmusphinx}\textbf{CMUSphinx} Sistema de reconocimiento de voz de código abierto para aplicaciones tanto en dispositivo móvil como en servidores. Los lenguajes soportados son: C, C++, C\#, Python, Ruby, Java, Javascript.\cite{Lamere2003}
 
 Este sistema posee 4 componentes principales: \underline{Pocketsphinx} (Sistema de reconocimiento de voz ligero escrito en C), \underline{Sphinx4} (Sistema de reconocimiento de voz avanzado escrito en Java), \underline{Sphinxtrain} (Sistema de entrenamiento de modelos acústicos) y \underline{Sphinxbase} (librería de soporte requerida por los demás sistemas). Estos sistemas deben instalarse en el dispositivo donde vayan a utilizarse.
 
-\paragraph{API Speech (Google)}
-Google Cloud Speech API permite convertir audio a texto mediante la aplicación de modelos de red neuronal en una API fácil de usar. La API reconoce más de 110 idiomas y variantes.\cite{}
+\textbf{API Speech (Google)} Google Cloud Speech API permite convertir audio a texto mediante la aplicación de modelos de red neuronal en una API fácil de usar. La API reconoce más de 110 idiomas y variantes.\cite{apigoogle}
 
-\paragraph{Bing Speech API}
-La API de voz a texto convierte el habla humana en texto que puede utilizarse como entrada o como comandos para controlar una aplicación. Para funciones avanzadas, los desarrolladores pueden descargar las bibliotecas de cliente de Microsoft Speech y enlazarlas a sus aplicaciones. Las librerías de clientes están disponibles en varias plataformas (Windows, Android, iOS) usando diferentes lenguajes (C\#, Java, JavaScript, ObjectiveC).\cite{}
+\textbf{Bing Speech API} La API de voz a texto convierte el habla humana en texto que puede utilizarse como entrada o como comandos para controlar una aplicación. Para funciones avanzadas, los desarrolladores pueden descargar las bibliotecas de cliente de Microsoft Speech y enlazarlas a sus aplicaciones. Las librerías de clientes están disponibles en varias plataformas (Windows, Android, iOS) usando diferentes lenguajes (C\#, Java, JavaScript, ObjectiveC).\cite{Microsoft}
 
-\paragraph{Watson (IBM)}
-Sistema de inteligencia artificial que transcribe automáticamente audio de 7 idiomas en tiempo real. Identificar y transcribir rápidamente lo que se está discutiendo, incluso a partir de audio de baja calidad, a través de una variedad de formatos de audio e interfaces de programación (HTTP REST, Websocket, Asynchronous HTTP).\cite{}
+\textbf{Watson (IBM)} Sistema de inteligencia artificial que transcribe automáticamente audio de 7 idiomas en tiempo real. Identificar y transcribir rápidamente lo que se está discutiendo, incluso a partir de audio de baja calidad, a través de una variedad de formatos de audio e interfaces de programación (HTTP REST, Websocket, Asynchronous HTTP).\cite{IBM2019}
 
 
 
@@ -74,13 +70,13 @@ En la \autoref{tab:comp_herramientas} se puede observar una comparativa de las h
             \textbf{Nuevo idioma} & Si & No & No & No \\ \hline
         \end{tabular}%
     }
-    \caption{Comparativa de herramientas de reconocimiento de voz}
+    \caption{Comparativa de herramientas de reconocimiento de voz.}
     \label{tab:comp_herramientas}
 \end{table}
 
-Debido a que las únicas herramientas que se pueden probar desde un script de forma gratuita es \textit{CMUSphinx} y \textit{API Speech (Google)}, se comparan estas dos herramientas en cuanto a tiempo de procesamiento y porcentaje de palabras correctamente transcritas.
+Debido a que las únicas herramientas que se pueden probar desde un \gls{script} de forma gratuita es \textit{CMUSphinx} y \textit{API Speech (Google)}, se comparan estas dos herramientas en cuanto a tiempo de procesamiento y porcentaje de palabras correctamente transcritas.
 
-Dadas las limitaciones que ofrece la herramienta Api Speech (Google) en su capa gratuita, se han probado cinco ficheros de audio en castellano con duraciones de cinco, diez, quince veinte y veinticinco segundos con las siguientes características: dos canales, frecuencia de muestreo de 44100 Hz de y 16 bits de profundidad. Las cantidad de palabras pronunciadas por cada fichero son: 
+Dadas las limitaciones que ofrece la herramienta API Speech (Google) en su capa gratuita, se han probado cinco ficheros de audio en castellano con duraciones de cinco, diez, quince, veinte y veinticinco segundos con las siguientes características: dos canales, frecuencia de muestreo de 44100 Hz de y 16 bits de profundidad. Las cantidad de palabras pronunciadas por cada fichero son: 
 
 \begin{table}[H]
     \centering
@@ -95,7 +91,7 @@ Dadas las limitaciones que ofrece la herramienta Api Speech (Google) en su capa 
     25 s & 67 \\ \hline
     \end{tabular}%
     }
-    \caption{Información de audios de prueba}
+    \caption{Información de audios de prueba.}
     \label{tab:audios-palabras}
 \end{table}
 
@@ -198,7 +194,7 @@ Tras analizar los datos que se muestran en la \autoref{graf:comp_herramientas} y
 En esta sección analizaremos las posibles herramientas que serán necesarias en el proyecto comparándolas en el caso de que existan varias en alguno de estos apartados
 
 \subsubsection{Sistema de reconocimiento de voz}\label{subsub:at-cmu}
-En la \autoref{sec:sistemas_voz} se han analizado las diferentes opciones existentes para el sistema de reconocimiento de voz. Debido a que existen requisitos (Véase \autoref{subsec:analisis_requisitos}) que implican el aprendizaje continuo y la adaptabilidad del sistema a distintos casos de uso. Se decide usar \hyperref[par:cmusphinx]{\textbf{CMUSphinx}}\cite{} como sistema de reconocimiento de voz ya que es el único sistema que permite la adaptabilidad del modelo de lenguaje, modelo fonético y modelo acústico, como se muestra en la \autoref{tab:comp_herramientas}. 
+En la \autoref{sec:sistemas_voz} se han analizado las diferentes opciones existentes para el sistema de reconocimiento de voz. Debido a que existen requisitos (Véase \autoref{subsec:analisis_requisitos}) que implican el aprendizaje continuo y la adaptabilidad del sistema a distintos casos de uso. Se decide usar \hyperref[par:cmusphinx]{\textbf{CMUSphinx}}\cite{Lamere2003a} como sistema de reconocimiento de voz ya que es el único sistema que permite la adaptabilidad del modelo de lenguaje, modelo fonético y modelo acústico, como se muestra en la \autoref{tab:comp_herramientas}. 
 
 Esta decisión condiciona la elección de las demás herramientas ya que los recursos necesarios deben ser compatibles con este sistema.
 
@@ -206,24 +202,24 @@ Esta decisión condiciona la elección de las demás herramientas ya que los rec
 Tras analizar los lenguajes de programación más conocidos que son compatibles con el sistema de reconocimiento de voz elegido anteriormente (Java, C, C++ y Python) se ha decidido utilizar \textbf{Python} por el siguiente motivo (entre muchos otros): existencia de herramientas o librerías para todas las necesidades de este proyecto. 
 
 \subsubsection{Sistema de conversión de grafema a fonema}\label{subsub:at-g2p}
-Existen dos sistemas compatibles con los requisitos del proyecto. Estos dos sistemas son: Phonetisaurus\cite{} y sequitur-g2p\cite{}. Ambos sistemas tienen librerías compatibles con Python por lo que la elección de uno u otro se ha basado en la facilidad de instalación y uso. El sistema elegido es \textbf{sequitur-g2p} ya que como se indica en su documentación, con un solo comando se puede generar un modelo a partir de un diccionario fonético inicial; además de poder reentrenar el modelo tantas veces como se desee. Para transcribir palabras utilizando el modelo generado basta con un comando indicándole la ruta del archivo que contenga las palabras que se deseen convertir a fonemas.
+Existen dos sistemas compatibles con los requisitos del proyecto. Estos dos sistemas son: Phonetisaurus\cite{NOVAK2016a} y sequitur-g2p\cite{Bisani2008}. Ambos sistemas tienen librerías compatibles con Python por lo que la elección de uno u otro se ha basado en la facilidad de instalación y uso. El sistema elegido es \textbf{sequitur-g2p} ya que como se indica en su documentación, con un solo comando se puede generar un modelo a partir de un diccionario fonético inicial; además de poder reentrenar el modelo tantas veces como se desee. Para transcribir palabras utilizando el modelo generado basta con un comando indicándole la ruta del archivo que contenga las palabras que se deseen convertir a fonemas.
 
 \subsubsection{Herramienta para entrenamiento de modelos de lenguaje}\label{subsub:at-srilm}
 El modelo de lenguaje será importante porque se utilizará por varios subsistemas para mejorar el rendimiento del componente de reconocimiento de voz. En este apartado existen tres herramientas que generan un modelo de lenguaje compatible con la herramienta \textit{CMUSphinx} anteriormente explicada.
 
-Estas tres herramientas son SRILM\cite{}, CMUCLMTK\cite{} o LMTool\cite{}. LMTool es una herramienta online que solamente funciona con el idioma inglés, por lo tanto no puede aplicarse al presente proyecto. Tras analizar \textbf{SRILM} y CMUCLMTK se decide por la primera de ellas debido a que no solamente es más sencilla de utilizar, sino que permite más flexibilidad y personalización en la creación de un modelo de lenguaje y en su mejora contínua.
+Estas tres herramientas son SRILM\cite{Stolcke}, CMUCLMTK\cite{Lamere2003a} o LMTool\cite{Rudnicky2010}. LMTool es una herramienta online que solamente funciona con el idioma inglés, por lo tanto no puede aplicarse al presente proyecto. Tras analizar \textbf{SRILM} y CMUCLMTK se decide por la primera de ellas debido a que no solamente es más sencilla de utilizar, sino que permite más flexibilidad y personalización en la creación de un modelo de lenguaje y en su mejora contínua.
 
 \subsubsection{Herramientas de entrenamiento acústico}\label{subsub:at-sphinxbase}
-Aunque la herramienta más utlizada para generar modelos acústicos es HTK\cite{}, la complejidad de uso es mayor que la utilidad que puede aportar a este proyecto. Otra herramienta de adaptación de modelos acústicos forma parte del paquete de librerias del sistema CMUSphinx; esta libreria es SphinxTrain. Debido a la complejidad de HTK y a la compatibilidad absoluta entre los modelos generados por SphinxTrain y CMUSphinx, se decide descartar la primera opción quedándo así definida \textbf{Sphinxtrain} como la herramienta para el entrenamiento acústico.
+Aunque la herramienta más utlizada para generar modelos acústicos es HTK\cite{Fine1998}, la complejidad de uso es mayor que la utilidad que puede aportar a este proyecto. Otra herramienta de adaptación de modelos acústicos forma parte del paquete de librerias del sistema CMUSphinx; esta libreria es SphinxTrain. Debido a la complejidad de HTK y a la compatibilidad absoluta entre los modelos generados por SphinxTrain y CMUSphinx, se decide descartar la primera opción quedándo así definida \textbf{Sphinxtrain} como la herramienta para el entrenamiento acústico.
 
 \subsubsection{Herramienta de objetos remotos}\label{subsub:at-pyro}
-En el lenguaje Python existen dos herramientas para objetos remotos e invocación remota: Pyro\cite{} y SPyRO\cite{}. SPyRO se encuentra en una versión no estable sin ninguna actualización desde 2008 por lo que se descarta ya que no cumple los \hyperref[subsubsec:restricciones]{requisitos de restricción del sistema} por no estar en una versión estable. Por tanto la herramienta elegida es \textbf{Pyro4} ya que la versión más reciente (versión 5) todavía se encuentra en una versión \textit{beta} (no estable).
+En el lenguaje Python existen dos herramientas para objetos remotos e invocación remota: Pyro\cite{Uber2018} y SPyRO\cite{Tellez2006}. SPyRO se encuentra en una versión no estable sin ninguna actualización desde 2008 por lo que se descarta , ya que no cumple los \hyperref[subsubsec:restricciones]{requisitos de restricción del sistema} por no estar en una versión estable. Por tanto la herramienta elegida es \textbf{Pyro4} ya que la versión más reciente (versión 5) todavía se encuentra en una versión \textit{beta} (no estable).
 
 \subsubsection{Herramienta de Interfaz Web de Usuario}\label{subsub:at-flask}
-Para la interfaz de usuario existen dos frameworks para Python que permiten la creación de una interfaz web dónde el usuario pueda introducir los datos de entrada al sistema: Django y Flask. Aunque Django\cite{} es un framework más potente y con mayor versatilidad, Flask\cite{} ofrece una mayor facilidad para la creación de una aplicación web sencilla, como la que se desea desarrollar en este proyecto. Por lo tanto se utiliza \textbf{Flask} como framework para la aplicación web del sistema.
+Para la interfaz de usuario existen dos frameworks para Python que permiten la creación de una interfaz web dónde el usuario pueda introducir los datos de entrada al sistema: Django y Flask. Aunque Django\cite{Hourieh2008} es un framework más potente y con mayor versatilidad, Flask\cite{ArmashAslam} ofrece una mayor facilidad para la creación de una aplicación web sencilla, como la que se desea desarrollar en este proyecto\cite{MolinaRios2016}. Por lo tanto se utiliza \textbf{Flask} como framework para la aplicación web del sistema.
 
 \subsubsection{Despliegue de aplicaciones}\label{subsub:at-vagrant}
-En el análisis de requisitos se especifica que el sistema se basará en componentes sustituibles, desacoplados y fácilmente desplegables por separado; por lo que la arquitectura de despliegue idónea para este proyecto son los \textbf{microservicios}.
+En el análisis de requisitos se especifica que el sistema se basará en componentes sustituibles, desacoplados y fácilmente desplegables por separado; por lo que la arquitectura de despliegue idónea para este proyecto son los \textbf{\gls{microservicios}}.
 
 Orientar el despliegue de la aplicación en microservicios frente a una arquitectura monolítica tiene una serie de ventajas e inconvenientes:
 
@@ -260,19 +256,12 @@ Las ventajas de usar una arquitectura basada en microservicios son:
 \multicolumn{1}{|l|}{\textbf{Transacción}} & ACID & BASE \\ \hline
 \end{tabular}%
 }
-\caption{Tabla comparativa de arquitectura monolíticas y arquitecturas basadas en microservicios. Fuente: IBM\cite{}}
+\caption{Tabla comparativa de arquitectura monolíticas y arquitecturas basadas en microservicios. Fuente: IBM\cite{Currie2015}.}
 \label{tab:monolitic-vs-microservice}
 \end{table}
 
-Para desplegar la arquitectura de microservicios se utilizará \textbf{Docker}. Docker es una tecnología de virtualización de contenedores software donde desplegar aplicaciones. Es como una máquina virtual muy ligera que proporciona una capa adicional de abstracción y automatización de virtualización de aplicaciones en múltiples sistemas operativos.\cite{}
+Para desplegar la arquitectura de microservicios se utilizará \textbf{Docker}\cite{Anderson2015}.
 
-Para aislar el proyecto y desplegarlo en un solo paso, todo el sistema se englobará en una máquina virtual gestionada por Vagrant y Ansible.
-
-\textbf{Vagrant} es una herramienta para construir entornos de desarrollo completos, encajonados en una máquina virtual. Vagrant reduce el tiempo de configuración del entorno de desarrollo, aumenta la paridad desarrollo/producción y lleva la idea de los recursos computacionales disponibles al escritorio.\cite{}
-
-\textbf{Ansible} es una herramienta para gestionar configuraciones de despliegue y aprovisionamiento de recursos de una máquina de una forma sencilla a través de un lenguaje específico de dominio (DSL) que se utiliza para describir el estado de los servidores\cite{}. Vagrant utilizará Ansible para aprovisionar la maquina que cree sobre el motor de virtualización.
-
-
-
+Para aislar el proyecto y desplegarlo en un solo paso, todo el sistema se englobará en una máquina virtual gestionada por Vagrant\cite{Hashimoto2013} y Ansible\cite{Hochstein2014}.
 
 \end{document}

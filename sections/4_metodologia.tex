@@ -7,11 +7,11 @@
 
 En la gestión de este proyecto se ha utilizado la metodología \textbf{Kanban}.
 
-Kanban se basa en la idea de que el trabajo que se está realizando debe limitarse y solamente se debe empezar algo cuando un bloque de trabajo anterior haya sido entregado o ha pasado a otra función posterior de la cadena.\cite{}
+Kanban se basa en la idea de que el trabajo que se está realizando debe limitarse y solamente se debe empezar algo cuando un bloque de trabajo anterior haya sido entregado o ha pasado a otra función posterior de la cadena.\cite{Ahmad2013}
 
-Esta metodología utiliza un mecanismo de control visual para hacer seguimiento del trabajo conforme este va recorriendo el flujo de valor. Este mecanismo se ha basado en un tablero en el software de gestión de proyectos \textbf{Trello}\cite{}.
+Esta metodología utiliza un mecanismo de control visual para hacer seguimiento del trabajo conforme este va recorriendo el flujo de valor. Este mecanismo se ha basado en un tablero en el software de gestión de proyectos \textbf{Trello}\cite{JohnsonMLIS2017}.
 
-La correspondencia entre la metodología de trabajo y el tablero de trello será:
+La correspondencia entre la metodología de trabajo y el tablero de Trello será:
 
 Las \textbf{tareas} en las que se desgrana el proyecto serán \textit{tarjetas}. Estas tarjetas tendrán un nombre significativo, u  miembro responsable, una descripción, una etiqueta que indique el nivel de prioridad (baja o urgente) y la naturaleza (Pruebas, Búsqueda, Desarrollo o Escritura) de la tarea, una fecha de vencimiento que indicará la fecha máxima para completar la tarea y un conjunto de comentarios para que los miembros del equipo puedan comentar aspectos referentes a esa tarea.
 
@@ -31,14 +31,14 @@ En este tablero existe una columna adicional llamada \textit{Documentos} donde s
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.7\textwidth]{trello}
+    \caption{Tablero de Trello del proyecto.}
     \label{img:trello}
-    \caption{Tablero de Trello del proyecto}
 \end{figure}
 
 \section{Planificación}
 El proyecto tuvo una \textbf{planificación inicial} de 300 horas de trabajo que se dividieron en: Investigación (30 horas), Diseño y Análisis de la Solución (65 horas), Implementación de la Solución (150 horas), Validación de la Solución (15 horas) y Documentación (40 horas).
 
-Con forme el proyecto fue avanzando, la estimación inicial se incumplió teniendo así un reparto de horas de la siguiente forma: Investigación (77,50 horas), Diseño y Análisis de la Solución (26,74 horas), Implementación de la Solución (303,58 horas), Validación de la Solución (34,12 horas) y Documentación (142,78 horas).
+Conforme el proyecto fue avanzando, la estimación inicial se incumplió teniendo así un reparto de horas de la siguiente forma: Investigación (77,50 horas), Diseño y Análisis de la Solución (26,74 horas), Implementación de la Solución (303,58 horas), Validación de la Solución (34,12 horas) y Documentación (142,78 horas).
 
 \begin{table}[H]
     \centering
@@ -53,16 +53,16 @@ Con forme el proyecto fue avanzando, la estimación inicial se incumplió tenien
         \textbf{Documentación} & 40 & \multirow{-5}{*}{300} & 142,78 & \multirow{-5}{*}{584,72} & \cellcolor[HTML]{FFCCC9}{\color[HTML]{333333} +102,78} & \multirow{-5}{*}{\cellcolor[HTML]{FFCCC9}+284,72} \\ \hline
     \end{tabular}%
     }
-    \caption{Comparativa de horas estimadas y horas dedicadas al desarrollo del proyecto}
+    \caption{Comparativa de horas estimadas y horas dedicadas al desarrollo del proyecto.}
     \label{tab:horas}
 \end{table}
 
 Como observamos en la \autoref{tab:horas} existe un gran descompensación entre las horas planificadas y las horas dedicadas (más de 284 horas). Esta descompensación se basa en el crecimiento del proyecto a medida que se ha ido desarrollando ya que se deseaban cumplir todos los objetivos marcados.
 
-Este registro de tiempo se ha realizado utilizando la herramienta \textbf{Harvest}\cite{}. Este software en línea permite registrar el tiempo de trabajo por cada tarea definida anteriormente en Trello. Por tanto, una vez acabado el proyecto se ha podido estudiar el tiempo dedicado en cada una de las tareas definidas.
+Este registro de tiempo se ha realizado utilizando la herramienta \textbf{Harvest}\cite{harvest}. Este software en línea permite registrar el tiempo de trabajo por cada tarea definida anteriormente en Trello. Por tanto, una vez acabado el proyecto se ha podido estudiar el tiempo dedicado en cada una de las tareas definidas.
 
 \section{Gestión de código fuente}
-El código fuente del proyecto se ha gestionado a través de repositorios privados de códigos en la plataforma \textbf{GitHub}\cite{}. GitHub es una plataforma para almacenar proyectos utilizando el sistema de control de versiones \textbf{Git}\cite{}. Utilizar un sistema de control de versiones facilita las tareas de mantenimiento del código ya que cada versión que se genere del proyecto se almacenará estando siempre disponible.
+El código fuente del proyecto se ha gestionado a través de repositorios privados de códigos en la plataforma \textbf{GitHub}\cite{github}. GitHub es una plataforma para almacenar proyectos utilizando el sistema de control de versiones \textbf{Git}\cite{Somasundaram2013}. Utilizar un sistema de control de versiones facilita las tareas de mantenimiento del código ya que cada versión que se genere del proyecto se almacenará estando siempre disponible.
 
 Para este proyecto se han creado nueve \textbf{repositorios}: Un repositorio general que contiene a los demás repositorios del proyecto y al código fuente encargado del despliegue de la infraestructura de ejecución, y a ocho repositorios que se corresponden con los componentes del sistema explicados en la \autoref{subsec:arquitectura_sistema}. Estos repositorios de componentes contendrán el código fuente e información de despliegue en contenedores.
 
@@ -91,7 +91,7 @@ Los repositorios con los enlaces a GitHub son:
     \item \textbf{S2T\_Training}: \href{https://github.com/pamamu/S2T_Training}{https://github.com/pamamu/S2T\_Training}
 \end{itemize}
 
-De manera adicional se ha creado un repositorio para almacenar la documentación realizada en \LaTeX: 
+De manera adicional se ha creado un repositorio para almacenar la documentación realizada en \LaTeX: \href{https://github.com/pamamu/S2T_OfficialDocumentation}{https://github.com/pamamu/S2T\_OfficialDocumentation}.
 
 
 \end{document}
